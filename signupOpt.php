@@ -18,7 +18,7 @@ include 'header.php';
                     <li>Hire based on test scores</li>
                     <li>Manage projects easily</li>
                 </ul>
-                <a href="signup_client.php" class="btn-card">Join as Client</a>
+                <a href="client/clientSignup.php" class="btn-card">Join as Client</a>
             </div>
 
             <!-- Freelancer Card -->
