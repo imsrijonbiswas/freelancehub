@@ -1,0 +1,116 @@
+/* SIGNUP PAGE */
+.signup-page {
+    padding: 80px 20px;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+}
+
+.signup-page h1 {
+    font-size: 28px;
+    margin-bottom: 50px;
+}
+
+/* CARDS CONTAINER */
+.cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 120px;
+    flex-wrap: wrap;
+}
+
+/* INDIVIDUAL CARD */
+.signup-card {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.10);
+    padding: 30px 25px;
+    width: 280px;
+    text-align: left;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.signup-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+}
+
+/* CARD ICON */
+.card-icon {
+    font-size: 28px;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+/* CARD TITLE */
+.signup-card h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #111;
+}
+
+/* CARD LIST */
+.signup-card ul {
+    list-style: none;
+    margin-bottom: 20px;
+    padding-left: 0;
+}
+
+.signup-card ul li {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* BUTTONS */
+.btn-card {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: 25px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    background-color: #0a9cff;
+    color: #fff;
+    transition: opacity 0.3s;
+}
+
+.btn-card:hover {
+    opacity: 0.85;
+}
+
+/* CLIENT CARD DIFFERENT COLOR */
+.client-card {
+    background-color: #7fcfff;
+    color: #fff;
+}
+
+.client-card ul li {
+    color: #e0f3ff;
+}
+
+/* FREELANCER CARD stays white (default) */
+
+/* Already account link */
+.already-account {
+    margin-top: 40px;
+    font-size: 14px;
+    color: #555;
+}
+
+.already-account a {
+    color: #0a9cff;
+    text-decoration: none;
+}
+
+.already-account a:hover {
+    text-decoration: underline;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+}

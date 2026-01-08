@@ -14,6 +14,11 @@
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
+
+    <?php if(basename($_SERVER['PHP_SELF']) == "signup.php"): ?>
+        <link rel="stylesheet" href="css/signup.css">
+    <?php endif; ?>
+
 </head>
 <body>
 
@@ -38,7 +43,7 @@
 
         <div class="auth-buttons">
             <a href="#" class="btn login">Login</a>
-            <a href="#" class="btn signup">Sign Up</a>
+            <a href="signup.php" class="btn signup">Sign Up</a>
         </div>
     </div>
 </header>
