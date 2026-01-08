@@ -22,7 +22,7 @@
 .signup-card {
     background-color: #fff;
     border-radius: 15px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.10);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.20);
     padding: 30px 25px;
     width: 280px;
     text-align: left;
@@ -92,7 +92,7 @@
 
 /* Already account link */
 .already-account {
-    margin-top: 40px;
+    margin-top: 70px;
     font-size: 14px;
     color: #555;
 }

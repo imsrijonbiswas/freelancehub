@@ -1,5 +1,5 @@
 <?php
-// signup.php
+$pageCSS = 'css/signupOpt.css';
 include 'header.php';
 ?>
 
@@ -31,7 +31,7 @@ include 'header.php';
                     <li>Get job recommendations</li>
                     <li>Earn verified badges</li>
                 </ul>
-                <a href="signup_freelancer.php" class="btn-card">Join as Freelancer</a>
+                <a href="freelancer/freelancerSignup.php" class="btn-card">Join as Freelancer</a>
             </div>
         </div>
 

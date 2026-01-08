@@ -1,0 +1,90 @@
+/* PAGE LAYOUT */
+.login-page {
+    text-align: center;
+    padding: 60px 20px;
+    min-height: calc(100vh - 120px);
+}
+
+/* ADMIN LINK */
+.admin-link {
+    text-align: right;
+    max-width: 420px;
+    margin: 0 auto 20px;
+}
+
+.admin-link a {
+    font-size: 14px;
+    color: #111;
+    text-decoration: underline;
+}
+
+/* TITLE */
+.login-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+/* LOGIN CARD */
+.login-card {
+    background: #dff3ff;
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 12px;
+}
+
+/* FORM */
+.form-group {
+    margin-bottom: 18px;
+    position: relative;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+}
+
+/* PASSWORD TOGGLE */
+.password-group {
+    display: flex;
+    align-items: center;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 14px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #555;
+}
+
+/* LOGIN BUTTON */
+.login-btn {
+    width: 100%;
+    padding: 14px;
+    background: #00a2ff;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    opacity: 0.9;
+}
+
+/* FORGOT PASSWORD */
+.forgot-password {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #111;
+    text-decoration: underline;
+}
