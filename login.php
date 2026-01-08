@@ -1,6 +1,8 @@
-<?php 
-include 'header.php'; 
+<?php
+$pageCSS = 'css/login.css';
+include 'header.php';
 ?>
+
 
 <link rel="stylesheet" href="css/login.css">
 
