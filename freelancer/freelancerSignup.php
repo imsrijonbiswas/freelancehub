@@ -9,7 +9,7 @@ include '../header.php';
         <h1>Sign Up as a Freelancer</h1>
         <p class="subtitle">Create a profile and get verified with a skill test</p>
         
-        <form class="signup-form" method="POST" action="process_signup.php">
+        <form class="signup-form" method="POST" action="freelancerTestrules.php">
             <div class="form-group">
                 <input type="text" name="fullname" placeholder="Full Name" required>
             </div>
