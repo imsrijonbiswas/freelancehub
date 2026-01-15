@@ -1,0 +1,29 @@
+<?php
+// FreelanceHub/admin/actions/delete_question.php
+session_start();
+
+// Check if admin is logged in
+if (!isset($_SESSION['admin_id'])) {
+    header('Location: ../adminlogin.php');
+    exit();
+}
+
+require '../../db_config.php';
+
+if (isset($_GET['id'])) {
+    $question_id = intval($_GET['id']);
+    
+    // Delete question (options will be deleted automatically due to CASCADE)
+    $stmt = $conn->prepare("DELETE FROM questions WHERE question_id = ?");
+    $stmt->bind_param("i", $question_id);
+    
+    if ($stmt->execute()) {
+        header('Location: ../dashboard.php?page=quizzes&msg=deleted');
+    } else {
+        header('Location: ../dashboard.php?page=quizzes&error=Failed to delete question');
+    }
+} else {
+    header('Location: ../dashboard.php?page=quizzes');
+}
+exit();
+?>

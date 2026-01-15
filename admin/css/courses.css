@@ -1,0 +1,167 @@
+/* FreelanceHub/admin/css/courses.css */
+
+.course-section {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    margin-bottom: 30px;
+}
+
+.course-form {
+    max-width: 800px;
+}
+
+.skills-checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.checkbox-label:hover {
+    background-color: #e3f2fd;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #00a2ff;
+}
+
+.checkbox-label span {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.form-hint {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #666;
+    font-style: italic;
+}
+
+/* Courses List */
+.courses-list {
+    display: grid;
+    gap: 20px;
+}
+
+.course-card {
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    transition: box-shadow 0.2s ease;
+}
+
+.course-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.course-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    gap: 15px;
+}
+
+.course-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+    flex: 1;
+}
+
+.course-date {
+    font-size: 0.85rem;
+    color: #999;
+    white-space: nowrap;
+}
+
+.course-content {
+    margin-bottom: 15px;
+}
+
+.course-url {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+}
+
+.course-url svg {
+    color: #00a2ff;
+    flex-shrink: 0;
+}
+
+.course-url a {
+    color: #00a2ff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    word-break: break-all;
+}
+
+.course-url a:hover {
+    text-decoration: underline;
+}
+
+.course-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-tag {
+    background: #e3f2fd;
+    color: #1976d2;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.course-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .skills-checkbox-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .course-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .course-title {
+        font-size: 1rem;
+    }
+}
