@@ -48,6 +48,10 @@ $admin_name = $admin['full_name'] ?? 'Admin';
         <link rel="stylesheet" href="css/quizzes.css">
     <?php elseif ($page == 'courses'): ?>
         <link rel="stylesheet" href="css/courses.css">
+    <?php elseif ($page == 'users'): ?>
+        <link rel="stylesheet" href="css/users.css">
+    <?php elseif ($page == 'skills'): ?>
+        <link rel="stylesheet" href="css/skills.css">
     <?php endif; ?>
 </head>
 <body>
