@@ -1,15 +1,30 @@
 <?php
+// FreelanceHub/freelancer/freelancerSignup.php
+session_start();
+require '../db_config.php';
+
+// Get all skills from database
+$skills_query = $conn->query("SELECT skill_id, skill_name FROM skill_categories ORDER BY skill_name ASC");
+
+// Get messages
+$error = $_GET['error'] ?? '';
+
 $pageCSS = 'freelancer/freelancerSignup.css';
 include '../header.php';
 ?>
 
+<?php if ($error): ?>
+    <div style="max-width: 480px; margin: 20px auto; padding: 15px; background: #fee; color: #c33; border-radius: 8px; border-left: 4px solid #e53935;">
+        <?= htmlspecialchars($error) ?>
+    </div>
+<?php endif; ?>
 
 <div class="signup-container">
     <div class="signup-content">
         <h1>Sign Up as a Freelancer</h1>
         <p class="subtitle">Create a profile and get verified with a skill test</p>
         
-        <form class="signup-form" method="POST" action="freelancerTestrules.php">
+        <form class="signup-form" method="POST" action="process_signup.php">
             <div class="form-group">
                 <input type="text" name="fullname" placeholder="Full Name" required>
             </div>
@@ -19,7 +34,7 @@ include '../header.php';
             </div>
             
             <div class="form-group password-group">
-                <input type="password" name="password" id="password" placeholder="Password" required>
+                <input type="password" name="password" id="password" placeholder="Password" required minlength="6">
                 <button type="button" class="toggle-password" onclick="togglePassword('password')">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -41,16 +56,13 @@ include '../header.php';
             </div>
             
             <div class="form-group">
-                <select name="skill_category" required>
+                <select name="skill_id" required>
                     <option value="" disabled selected>Select Your Skill Category</option>
-                    <option value="web-development">Web Development</option>
-                    <option value="mobile-development">Mobile Development</option>
-                    <option value="graphic-design">Graphic Design</option>
-                    <option value="content-writing">Content Writing</option>
-                    <option value="digital-marketing">Digital Marketing</option>
-                    <option value="video-editing">Video Editing</option>
-                    <option value="data-entry">Data Entry</option>
-                    <option value="virtual-assistant">Virtual Assistant</option>
+                    <?php while ($skill = $skills_query->fetch_assoc()): ?>
+                        <option value="<?= $skill['skill_id'] ?>">
+                            <?= htmlspecialchars($skill['skill_name']) ?>
+                        </option>
+                    <?php endwhile; ?>
                 </select>
             </div>
             
@@ -62,7 +74,7 @@ include '../header.php';
         </form>
         
         <p class="login-link">
-            Already have an account? <a href="login.php">Log In</a>
+            Already have an account? <a href="../login.php">Log In</a>
         </p>
     </div>
 </div>
@@ -83,6 +95,4 @@ function togglePassword(fieldId) {
 }
 </script>
 
-<?php 
-include '../footer.php'; 
-?>
+<?php include '../footer.php'; ?>

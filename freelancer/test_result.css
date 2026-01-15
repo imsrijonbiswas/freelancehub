@@ -1,0 +1,126 @@
+/* FreelanceHub/freelancer/test_result.css */
+
+.result-container {
+    min-height: calc(100vh - 150px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+}
+
+.result-box {
+    max-width: 600px;
+    width: 100%;
+}
+
+.result-content {
+    background: linear-gradient(135deg, #d4f1ff 0%, #e8f7ff 100%);
+    padding: 50px 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.result-content.failed {
+    background: linear-gradient(135deg, #ffe8e8 0%, #fff0f0 100%);
+}
+
+.result-content h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 30px;
+    font-family: 'Inter', sans-serif;
+}
+
+.fail-icon {
+    margin-bottom: 20px;
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.score-display {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+.score-label {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.score-value {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #4caf50;
+    margin-bottom: 15px;
+}
+
+.score-value.failed-score {
+    color: #ff3b3b;
+}
+
+.score-info {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+.score-info strong {
+    color: #00a2ff;
+}
+
+.retry-info {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.btn-finalize,
+.btn-courses {
+    display: inline-block;
+    padding: 14px 40px;
+    background-color: #00a2ff;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 162, 255, 0.3);
+}
+
+.btn-finalize:hover,
+.btn-courses:hover {
+    background-color: #0090e0;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 162, 255, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .result-content {
+        padding: 40px 25px;
+    }
+    
+    .result-content h1 {
+        font-size: 1.5rem;
+    }
+    
+    .score-value {
+        font-size: 2.5rem;
+    }
+}

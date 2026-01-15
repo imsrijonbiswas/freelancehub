@@ -88,3 +88,26 @@
     color: #111;
     text-decoration: underline;
 }
+
+/* SIGNUP LINKS */
+.signup-links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.signup-links p {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+
+.signup-link {
+    color: #00a2ff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.signup-link:hover {
+    text-decoration: underline;
+}
