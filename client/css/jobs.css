@@ -1,0 +1,448 @@
+/* FreelanceHub/client/css/jobs.css */
+
+.jobs-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.jobs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.jobs-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.btn-post-new {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #00a2ff 0%, #0090e0 100%);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 162, 255, 0.3);
+}
+
+.btn-post-new:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 162, 255, 0.4);
+}
+
+/* Filter Tabs */
+.filter-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+    border-bottom: 2px solid #e5e7eb;
+    overflow-x: auto;
+}
+
+.tab {
+    padding: 12px 24px;
+    color: #6b7280;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.tab:hover {
+    color: #00a2ff;
+}
+
+.tab.active {
+    color: #00a2ff;
+    border-bottom-color: #00a2ff;
+}
+
+/* Jobs Grid */
+.jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 24px;
+}
+
+.job-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+.job-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.job-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.job-card-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    flex: 1;
+    margin-right: 12px;
+}
+
+.job-status {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.job-status.open {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.job-status.ongoing {
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+.job-status.completed {
+    background: #f3e8ff;
+    color: #9333ea;
+}
+
+.job-status.closed {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.job-description {
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+.job-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.meta-item svg {
+    color: #9ca3af;
+}
+
+.job-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.proposals-count {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.proposals-count strong {
+    color: #00a2ff;
+    font-weight: 600;
+}
+
+.btn-view-proposals {
+    padding: 8px 16px;
+    background: #f3f4f6;
+    color: #374151;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-view-proposals:hover {
+    background: #00a2ff;
+    color: white;
+}
+
+/* Proposals Section */
+.proposals-section {
+    background: white;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.section-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.btn-back {
+    color: #6b7280;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.btn-back:hover {
+    color: #00a2ff;
+}
+
+.proposals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.proposal-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.3s ease;
+}
+
+.proposal-card:hover {
+    border-color: #00a2ff;
+    box-shadow: 0 4px 12px rgba(0, 162, 255, 0.1);
+}
+
+.proposal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.freelancer-info {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.freelancer-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00a2ff 0%, #0090e0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.freelancer-avatar svg {
+    color: white;
+}
+
+.freelancer-info h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+}
+
+.rating span {
+    font-size: 12px;
+    color: #6b7280;
+    margin-left: 4px;
+}
+
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-badge.pending {
+    background: #fff4e6;
+    color: #fb923c;
+}
+
+.status-badge.accepted {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.status-badge.rejected {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.proposal-body {
+    margin-bottom: 16px;
+}
+
+.proposal-text {
+    font-size: 14px;
+    color: #374151;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+.freelancer-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-tag {
+    padding: 6px 12px;
+    background: #f3f4f6;
+    border-radius: 12px;
+    font-size: 12px;
+    color: #374151;
+}
+
+.proposal-actions {
+    display: flex;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid #f3f4f6;
+}
+
+.btn-accept,
+.btn-reject {
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-accept {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+    color: white;
+}
+
+.btn-accept:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+}
+
+.btn-reject {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.btn-reject:hover {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    grid-column: 1 / -1;
+}
+
+.empty-state svg {
+    color: #d1d5db;
+    margin-bottom: 20px;
+}
+
+.empty-state h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #6b7280;
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    font-size: 14px;
+    color: #9ca3af;
+    margin-bottom: 24px;
+}
+
+.btn-post-job {
+    display: inline-block;
+    padding: 12px 32px;
+    background: linear-gradient(135deg, #00a2ff 0%, #0090e0 100%);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-post-job:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 162, 255, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .jobs-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .jobs-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .proposal-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .proposal-actions {
+        flex-direction: column;
+    }
+
+    .btn-accept,
+    .btn-reject {
+        width: 100%;
+    }
+}

@@ -1,0 +1,225 @@
+/* FreelanceHub/client/css/post_job.css */
+
+.post-job-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.post-job-header {
+    margin-bottom: 32px;
+}
+
+.post-job-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.post-job-card {
+    background: white;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.job-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    color: #1a1a1a;
+    background: #f9fafb;
+    transition: all 0.3s ease;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+    outline: none;
+    border-color: #00a2ff;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(0, 162, 255, 0.1);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-select {
+    cursor: pointer;
+}
+
+/* Skills Input */
+.skills-input-container {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-add-skill {
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #00a2ff 0%, #0090e0 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.btn-add-skill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 162, 255, 0.3);
+}
+
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+    min-height: 40px;
+}
+
+.skill-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #d4f1ff 0%, #e8f7ff 100%);
+    color: #00a2ff;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.remove-skill {
+    background: none;
+    border: none;
+    color: #00a2ff;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.remove-skill:hover {
+    background: rgba(0, 162, 255, 0.2);
+}
+
+/* Price Range */
+.price-range-container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 12px;
+    align-items: center;
+}
+
+.price-separator {
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 16px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.btn-cancel,
+.btn-post {
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-cancel {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.btn-cancel:hover {
+    background: #e5e7eb;
+}
+
+.btn-post {
+    background: linear-gradient(135deg, #00a2ff 0%, #0090e0 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 162, 255, 0.3);
+}
+
+.btn-post:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 162, 255, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .post-job-card {
+        padding: 24px;
+    }
+
+    .price-range-container {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .price-separator {
+        display: none;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn-cancel,
+    .btn-post {
+        width: 100%;
+    }
+}

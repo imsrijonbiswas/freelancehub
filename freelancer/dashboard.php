@@ -4,7 +4,7 @@ session_start();
 
 // Check if freelancer is logged in
 if (!isset($_SESSION['freelancer_id'])) {
-    header('Location: login.php');
+    header('Location: ../login.php');
     exit();
 }
 
@@ -16,8 +16,9 @@ $page = $_GET['page'] ?? 'home';
 // Define available pages
 $pages = [
     'home' => 'Dashboard',
-    'jobs' => 'Available Jobs',
+    'jobs' => 'Browse Jobs',
     'applications' => 'My Applications',
+    'messages' => 'Messages',
     'profile' => 'My Profile'
 ];
 
@@ -27,6 +28,21 @@ $pageTitle = $pages[$page] ?? 'Dashboard';
 $freelancer_id = $_SESSION['freelancer_id'];
 $freelancer_name = $_SESSION['freelancer_name'];
 $freelancer_skill = $_SESSION['freelancer_skill_name'];
+
+// Get unread messages count
+$unread_query = $conn->query("
+    SELECT COUNT(DISTINCT m.job_id) as unread_count
+    FROM messages m
+    JOIN hired_freelancers hf ON m.job_id = hf.job_id
+    WHERE hf.freelancer_id = $freelancer_id 
+    AND m.sender_type = 'client'
+    AND m.message_id > COALESCE((
+        SELECT MAX(message_id) FROM messages 
+        WHERE job_id = m.job_id 
+        AND sender_type = 'freelancer'
+    ), 0)
+");
+$unread_count = $unread_query->fetch_assoc()['unread_count'] ?? 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,6 +82,9 @@ $freelancer_skill = $_SESSION['freelancer_skill_name'];
                     <a href="dashboard.php?page=<?= $key ?>" 
                        class="nav-item <?= $page === $key ? 'active' : '' ?>">
                         <?= htmlspecialchars($label) ?>
+                        <?php if ($key === 'messages' && $unread_count > 0): ?>
+                            <span class="badge"><?= $unread_count ?></span>
+                        <?php endif; ?>
                     </a>
                 <?php endforeach; ?>
             </nav>
