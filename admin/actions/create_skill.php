@@ -1,4 +1,5 @@
 <?php
+// FreelanceHub/admin/actions/create_skill.php
 require '../../db_config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

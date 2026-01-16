@@ -1,5 +1,6 @@
 <?php
 // FreelanceHub/admin/actions/add_course.php
+session_name("ADMIN_SESSION");
 session_start();
 
 // Check if admin is logged in

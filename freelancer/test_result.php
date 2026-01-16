@@ -1,5 +1,6 @@
 <?php
 // FreelanceHub/freelancer/test_result.php
+session_name("FREELANCER_SESSION");
 session_start();
 require '../db_config.php';
 

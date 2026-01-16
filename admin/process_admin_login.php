@@ -1,5 +1,9 @@
 <?php
+// FreelanceHub/admin/process_admin_login.php
+// USE A SEPARATE SESSION FOR ADMIN
+session_name("ADMIN_SESSION");
 session_start();
+
 require '../db_config.php';
 
 $email = trim($_POST['email']);
@@ -15,6 +19,7 @@ $result = $stmt->get_result();
 
 if ($result->num_rows === 1) {
     $admin = $result->fetch_assoc();
+
     $_SESSION['admin_id'] = $admin['admin_id'];
     $_SESSION['admin_name'] = $admin['full_name'];
 

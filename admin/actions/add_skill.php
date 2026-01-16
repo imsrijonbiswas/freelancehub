@@ -1,5 +1,6 @@
 <?php
 // FreelanceHub/admin/actions/add_skill.php
+session_name("ADMIN_SESSION");
 session_start();
 
 // Check if admin is logged in

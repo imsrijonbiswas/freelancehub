@@ -1,5 +1,6 @@
 <?php
 // FreelanceHub/freelancer/dashboard.php
+session_name("FREELANCER_SESSION");
 session_start();
 
 // Check if freelancer is logged in

@@ -1,5 +1,6 @@
 <?php
 // FreelanceHub/client/clientSignup.php
+session_name("CLIENT_SESSION");
 session_start();
 require '../db_config.php';
 

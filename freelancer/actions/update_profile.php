@@ -1,5 +1,6 @@
 <?php
 // FreelanceHub/freelancer/actions/update_profile.php
+session_name("FREELANCER_SESSION");
 session_start();
 
 if (!isset($_SESSION['freelancer_id'])) {

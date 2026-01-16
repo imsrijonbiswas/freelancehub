@@ -1,5 +1,6 @@
 <?php
 // FreelanceHub/freelancer/actions/send_message.php
+session_name("FREELANCER_SESSION");
 session_start();
 
 if (!isset($_SESSION['freelancer_id'])) {

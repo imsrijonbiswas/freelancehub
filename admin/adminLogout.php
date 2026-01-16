@@ -1,10 +1,10 @@
 <?php
+// FreelanceHub/admin/adminlogout.php
+session_name("ADMIN_SESSION");
 session_start();
-
-// Remove all admin session data
 session_unset();
 session_destroy();
 
-// Redirect to login page
-header("Location: adminLogin.php");
-exit;
+header('Location: adminLogin.php');
+exit();
+?>

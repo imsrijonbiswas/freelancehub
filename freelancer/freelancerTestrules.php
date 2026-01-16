@@ -1,5 +1,6 @@
 <?php
 // FreelanceHub/freelancer/freelancerTestrules.php
+session_name("FREELANCER_SESSION");
 session_start();
 
 // Check if signup data exists

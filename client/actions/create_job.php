@@ -1,5 +1,6 @@
 <?php
 // FreelanceHub/client/actions/create_job.php
+session_name("CLIENT_SESSION");
 session_start();
 
 if (!isset($_SESSION['client_id'])) {
