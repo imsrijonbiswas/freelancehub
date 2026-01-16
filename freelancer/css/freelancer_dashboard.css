@@ -142,6 +142,14 @@ body {
     font-weight: 700;
 }
 
+.info-message {
+    background-color: #e3f2fd;
+    color: #1565c0;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #2196f3;
+}
+
 /* ========== MAIN CONTENT ========== */
 .dashboard-main {
     flex: 1;

@@ -1,8 +1,26 @@
 <?php
-// clientsignup.php
+// FreelanceHub/client/clientSignup.php
+session_start();
+require '../db_config.php';
+
+$error = $_GET['error'] ?? '';
+$success = $_GET['success'] ?? '';
+
 $pageCSS = 'client/clientSignup.css';
 include '../header.php';
 ?>
+
+<?php if ($error): ?>
+    <div style="max-width: 480px; margin: 20px auto; padding: 15px; background: #fee; color: #c33; border-radius: 8px; border-left: 4px solid #e53935;">
+        <?= htmlspecialchars($error) ?>
+    </div>
+<?php endif; ?>
+
+<?php if ($success): ?>
+    <div style="max-width: 480px; margin: 20px auto; padding: 15px; background: #e8f5e9; color: #2e7d32; border-radius: 8px; border-left: 4px solid #4caf50;">
+        <?= htmlspecialchars($success) ?>
+    </div>
+<?php endif; ?>
 
 <div class="signup-container">
     <div class="signup-content">
@@ -19,7 +37,7 @@ include '../header.php';
             </div>
             
             <div class="form-group password-group">
-                <input type="password" name="password" id="password" placeholder="Password" required>
+                <input type="password" name="password" id="password" placeholder="Password" required minlength="6">
                 <button type="button" class="toggle-password" onclick="togglePassword('password')">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -44,7 +62,7 @@ include '../header.php';
         </form>
         
         <p class="login-link">
-            Already have an account? <a href="login.php">Log In</a>
+            Already have an account? <a href="../login.php">Log In</a>
         </p>
     </div>
 </div>
@@ -65,6 +83,4 @@ function togglePassword(fieldId) {
 }
 </script>
 
-<?php
-include '../footer.php';
-?>
+<?php include '../footer.php'; ?>

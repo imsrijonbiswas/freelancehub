@@ -1,16 +1,6 @@
 <?php
 // FreelanceHub/login.php
-session_start();
-
-// Check if already logged in
-if (isset($_SESSION['freelancer_id'])) {
-    header('Location: freelancer/dashboard.php');
-    exit();
-} elseif (isset($_SESSION['client_id'])) {
-    header('Location: client/dashboard.php');
-    exit();
-}
-
+// DON'T redirect if already logged in - show login page anyway
 $error = $_GET['error'] ?? '';
 
 $pageCSS = 'css/login.css';
@@ -54,3 +44,5 @@ function togglePassword() {
     pass.type = pass.type === "password" ? "text" : "password";
 }
 </script>
+
+<?php include 'footer.php'; ?>

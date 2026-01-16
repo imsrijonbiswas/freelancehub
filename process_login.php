@@ -3,6 +3,15 @@
 session_start();
 require 'db_config.php';
 
+// If already logged in, redirect to appropriate dashboard
+if (isset($_SESSION['freelancer_id'])) {
+    header('Location: freelancer/dashboard.php');
+    exit();
+} elseif (isset($_SESSION['client_id'])) {
+    header('Location: client/dashboard.php');
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
