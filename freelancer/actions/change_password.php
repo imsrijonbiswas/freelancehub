@@ -16,19 +16,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
     
-    // Get current password
     $stmt = $conn->prepare("SELECT password FROM freelancers WHERE freelancer_id = ?");
     $stmt->bind_param("i", $freelancer_id);
     $stmt->execute();
     $result = $stmt->get_result()->fetch_assoc();
     
-    // Verify current password (no hashing)
     if ($current_password !== $result['password']) {
         header('Location: ../dashboard.php?page=profile&error=Current password is incorrect');
         exit();
     }
     
-    // Validate new password
     if ($new_password !== $confirm_password) {
         header('Location: ../dashboard.php?page=profile&error=New passwords do not match');
         exit();
@@ -39,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
     
-    // Update password (no hashing)
     $stmt = $conn->prepare("UPDATE freelancers SET password = ? WHERE freelancer_id = ?");
     $stmt->bind_param("si", $new_password, $freelancer_id);
     

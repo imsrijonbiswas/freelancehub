@@ -92,7 +92,6 @@
     font-size: 0.85rem;
 }
 
-/* Questions List */
 .questions-list {
     display: flex;
     flex-direction: column;
@@ -199,7 +198,6 @@
     font-size: 0.85rem;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .options-grid {
         grid-template-columns: 1fr;

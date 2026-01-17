@@ -10,7 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password']; // No hashing
     $confirm_password = $_POST['confirm_password'];
     
-    // Validate inputs
     if (empty($fullname) || empty($email) || empty($password)) {
         header('Location: clientSignup.php?error=All fields are required');
         exit();
@@ -26,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
     
-    // Check if email already exists
     $stmt = $conn->prepare("SELECT client_id FROM clients WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -37,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
     
-    // Create client account (NO PASSWORD HASHING)
     $stmt = $conn->prepare("INSERT INTO clients (full_name, email, password) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $fullname, $email, $password);
     

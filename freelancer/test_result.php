@@ -4,13 +4,11 @@ session_name("FREELANCER_SESSION");
 session_start();
 require '../db_config.php';
 
-// Check if test was completed
 if (!isset($_SESSION['test_questions']) || !isset($_SESSION['answers'])) {
     header('Location: freelancerSignup.php');
     exit();
 }
 
-// Calculate score
 $total_questions = count($_SESSION['test_questions']);
 $correct_answers = 0;
 
@@ -26,7 +24,6 @@ foreach ($_SESSION['test_questions'] as $index => $question) {
 $score_percentage = ($correct_answers / $total_questions) * 100;
 $passed = $score_percentage >= 70;
 
-// Save test attempt
 $email = $_SESSION['signup_data']['email'];
 $skill_id = $_SESSION['signup_data']['skill_id'];
 
@@ -37,7 +34,6 @@ $stmt = $conn->prepare("
 $stmt->bind_param("sidi", $email, $skill_id, $score_percentage, $passed);
 $stmt->execute();
 
-// If passed, create freelancer account
 if ($passed) {
     $fullname = $_SESSION['signup_data']['fullname'];
     $hashed_password = $_SESSION['signup_data']['password'];
@@ -50,17 +46,14 @@ if ($passed) {
     $stmt->execute();
 }
 
-// Clear test session but keep result for display
 $test_data = [
     'score' => $score_percentage,
     'passed' => $passed,
     'skill_category' => $_SESSION['skill_category']
 ];
 
-// Clear all session data
 session_unset();
 
-// Set result data
 $_SESSION['test_result'] = $test_data;
 
 $pageCSS = 'freelancer/test_result.css';

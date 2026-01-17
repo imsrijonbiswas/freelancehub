@@ -3,7 +3,6 @@
 session_name("ADMIN_SESSION");
 session_start();
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
     header('Location: ../adminlogin.php');
     exit();
@@ -14,7 +13,6 @@ require '../../db_config.php';
 if (isset($_GET['id'])) {
     $course_id = intval($_GET['id']);
     
-    // Delete course (skill relationships will be deleted automatically due to CASCADE)
     $stmt = $conn->prepare("DELETE FROM courses WHERE course_id = ?");
     $stmt->bind_param("i", $course_id);
     

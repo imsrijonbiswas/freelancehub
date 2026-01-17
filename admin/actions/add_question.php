@@ -3,7 +3,6 @@
 session_name("ADMIN_SESSION");
 session_start();
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
     header('Location: ../adminlogin.php');
     exit();
@@ -20,24 +19,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $option_d = trim($_POST['option_d']);
     $correct_answer = $_POST['correct_answer'];
     
-    // Validate inputs
     if (empty($skill_id) || empty($question_text) || empty($option_a) || 
         empty($option_b) || empty($option_c) || empty($option_d) || empty($correct_answer)) {
         header('Location: ../dashboard.php?page=quizzes&error=All fields are required');
         exit();
     }
     
-    // Start transaction
     $conn->begin_transaction();
     
     try {
-        // Insert question
         $stmt = $conn->prepare("INSERT INTO questions (skill_id, question_text) VALUES (?, ?)");
         $stmt->bind_param("is", $skill_id, $question_text);
         $stmt->execute();
         $question_id = $conn->insert_id;
         
-        // Insert options
         $options = [
             'A' => $option_a,
             'B' => $option_b,
@@ -53,14 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->execute();
         }
         
-        // Commit transaction
         $conn->commit();
         
         header('Location: ../dashboard.php?page=quizzes&msg=added');
         exit();
         
     } catch (Exception $e) {
-        // Rollback on error
         $conn->rollback();
         header('Location: ../dashboard.php?page=quizzes&error=' . urlencode($e->getMessage()));
         exit();

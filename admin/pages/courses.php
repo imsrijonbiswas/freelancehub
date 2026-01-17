@@ -1,10 +1,8 @@
 <?php
 // FreelanceHub/admin/pages/courses.php
 
-// Get all skill categories for dropdown
 $skills_query = $conn->query("SELECT skill_id, skill_name FROM skill_categories ORDER BY skill_name");
 
-// Get all courses with their associated skills
 $courses_query = $conn->query("
     SELECT 
         c.course_id, 
@@ -19,7 +17,6 @@ $courses_query = $conn->query("
     ORDER BY c.created_at DESC
 ");
 
-// Get success/error messages
 $message = $_GET['msg'] ?? '';
 $error = $_GET['error'] ?? '';
 ?>
@@ -33,7 +30,6 @@ $error = $_GET['error'] ?? '';
     <div class="error-message"><?= htmlspecialchars($error) ?></div>
 <?php endif; ?>
 
-<!-- Add New Course Section -->
 <div class="course-section">
     <div class="section-header">
         <h2>Add New Course</h2>
@@ -72,7 +68,6 @@ $error = $_GET['error'] ?? '';
     </form>
 </div>
 
-<!-- Courses List Section -->
 <div class="course-section">
     <div class="section-header">
         <h2>All Courses (<?= $courses_query->num_rows ?>)</h2>

@@ -3,13 +3,11 @@
 session_name("FREELANCER_SESSION");
 session_start();
 
-// Check if signup data exists
 if (!isset($_SESSION['signup_data']) || !isset($_SESSION['skill_category'])) {
     header('Location: freelancerSignup.php');
     exit();
 }
 
-// Clear any previous test session
 unset($_SESSION['test_started']);
 unset($_SESSION['test_questions']);
 unset($_SESSION['answers']);

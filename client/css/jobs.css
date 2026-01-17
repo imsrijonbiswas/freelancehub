@@ -38,7 +38,6 @@
     box-shadow: 0 6px 16px rgba(0, 162, 255, 0.4);
 }
 
-/* Filter Tabs */
 .filter-tabs {
     display: flex;
     gap: 8px;
@@ -68,7 +67,6 @@
     border-bottom-color: #00a2ff;
 }
 
-/* Jobs Grid */
 .jobs-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));

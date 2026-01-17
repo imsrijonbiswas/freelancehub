@@ -3,7 +3,6 @@
 session_name("ADMIN_SESSION");
 session_start();
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
     header('Location: adminlogin.php');
     exit();
@@ -11,10 +10,8 @@ if (!isset($_SESSION['admin_id'])) {
 
 require '../db_config.php';
 
-// Get current page
 $page = $_GET['page'] ?? 'dashboard';
 
-// Define available pages
 $pages = [
     'dashboard' => 'Dashboard',
     'users'     => 'Users',
@@ -26,7 +23,6 @@ $pages = [
 $pageTitle = $pages[$page] ?? 'Dashboard';
 $pageFile  = $page . '.php';
 
-// Get admin info
 $admin_id = $_SESSION['admin_id'];
 $stmt = $conn->prepare("SELECT full_name FROM admins WHERE admin_id = ?");
 $stmt->bind_param("i", $admin_id);
@@ -57,7 +53,6 @@ $admin_name = $admin['full_name'] ?? 'Admin';
 </head>
 <body>
     <div class="admin-container">
-        <!-- SIDEBAR -->
         <aside class="admin-sidebar">
             <div class="sidebar-header">
                 <div class="logo">
@@ -97,7 +92,6 @@ $admin_name = $admin['full_name'] ?? 'Admin';
             </div>
         </aside>
         
-        <!-- MAIN CONTENT -->
         <main class="admin-main">
             <div class="main-header">
                 <h1><?= htmlspecialchars($pageTitle) ?></h1>

@@ -14,7 +14,6 @@ if (isset($_GET['job_id'])) {
     $job_id = intval($_GET['job_id']);
     $freelancer_id = $_SESSION['freelancer_id'];
     
-    // Check if already applied
     $check = $conn->prepare("SELECT application_id FROM job_applications WHERE job_id = ? AND freelancer_id = ?");
     $check->bind_param("ii", $job_id, $freelancer_id);
     $check->execute();
@@ -24,7 +23,6 @@ if (isset($_GET['job_id'])) {
         exit();
     }
     
-    // Apply for job
     $stmt = $conn->prepare("INSERT INTO job_applications (job_id, freelancer_id) VALUES (?, ?)");
     $stmt->bind_param("ii", $job_id, $freelancer_id);
     

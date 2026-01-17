@@ -1,14 +1,11 @@
 <?php
 // FreelanceHub/admin/pages/users.php
 
-// Get filter
 $filter_type = $_GET['type'] ?? 'all'; // all, freelancers, clients
 
-// Get statistics
 $total_freelancers = $conn->query("SELECT COUNT(*) as total FROM freelancers")->fetch_assoc()['total'] ?? 0;
 $total_clients = $conn->query("SELECT COUNT(*) as total FROM clients")->fetch_assoc()['total'] ?? 0;
 
-// Get users based on filter
 if ($filter_type == 'freelancers') {
     $users_query = $conn->query("
         SELECT 
@@ -32,7 +29,6 @@ if ($filter_type == 'freelancers') {
         ORDER BY created_at DESC
     ");
 } else {
-    // All users
     $users_query = $conn->query("
         SELECT 
             freelancer_id as user_id,
@@ -53,19 +49,16 @@ if ($filter_type == 'freelancers') {
     ");
 }
 
-// Get messages
 $message = $_GET['msg'] ?? '';
 $error = $_GET['error'] ?? '';
 ?>
 
-<!-- Messages -->
 <?php if ($message == 'deleted'): ?>
     <div class="success-message">User deleted successfully!</div>
 <?php elseif ($error): ?>
     <div class="error-message"><?= htmlspecialchars($error) ?></div>
 <?php endif; ?>
 
-<!-- Statistics Section -->
 <div class="users-stats">
     <div class="stat-card-small">
         <span class="stat-number-small"><?= $total_freelancers ?></span>
@@ -81,7 +74,6 @@ $error = $_GET['error'] ?? '';
     </div>
 </div>
 
-<!-- Users List Section -->
 <div class="users-section">
     <div class="section-header">
         <h2>All Users</h2>

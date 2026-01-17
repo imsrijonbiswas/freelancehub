@@ -20,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
     
-    // Verify freelancer is hired for this job
     $check = $conn->prepare("SELECT hire_id FROM hired_freelancers WHERE job_id = ? AND freelancer_id = ?");
     $check->bind_param("ii", $job_id, $freelancer_id);
     $check->execute();
@@ -30,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
     
-    // Insert message
     $stmt = $conn->prepare("INSERT INTO messages (job_id, sender_type, sender_id, message_text) VALUES (?, 'freelancer', ?, ?)");
     $stmt->bind_param("iis", $job_id, $freelancer_id, $message);
     $stmt->execute();

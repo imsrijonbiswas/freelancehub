@@ -3,7 +3,6 @@
 session_name("FREELANCER_SESSION");
 session_start();
 
-// Check if freelancer is logged in
 if (!isset($_SESSION['freelancer_id'])) {
     header('Location: ../login.php');
     exit();
@@ -11,10 +10,8 @@ if (!isset($_SESSION['freelancer_id'])) {
 
 require '../db_config.php';
 
-// Get current page
 $page = $_GET['page'] ?? 'home';
 
-// Define available pages
 $pages = [
     'home' => 'Dashboard',
     'jobs' => 'Browse Jobs',
@@ -25,12 +22,10 @@ $pages = [
 
 $pageTitle = $pages[$page] ?? 'Dashboard';
 
-// Get freelancer info
 $freelancer_id = $_SESSION['freelancer_id'];
 $freelancer_name = $_SESSION['freelancer_name'];
 $freelancer_skill = $_SESSION['freelancer_skill_name'];
 
-// Get unread messages count
 $unread_query = $conn->query("
     SELECT COUNT(DISTINCT m.job_id) as unread_count
     FROM messages m
@@ -56,7 +51,6 @@ $unread_count = $unread_query->fetch_assoc()['unread_count'] ?? 0;
 </head>
 <body>
     <div class="dashboard-container">
-        <!-- SIDEBAR -->
         <aside class="dashboard-sidebar">
             <div class="sidebar-header">
                 <div class="logo">
@@ -100,7 +94,6 @@ $unread_count = $unread_query->fetch_assoc()['unread_count'] ?? 0;
             </div>
         </aside>
         
-        <!-- MAIN CONTENT -->
         <main class="dashboard-main">
             <div class="main-header">
                 <h1><?= htmlspecialchars($pageTitle) ?></h1>

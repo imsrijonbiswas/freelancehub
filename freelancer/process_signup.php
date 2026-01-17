@@ -11,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $confirm_password = $_POST['confirm_password'];
     $skill_id = intval($_POST['skill_id']);
     
-    // Validate inputs
     if (empty($fullname) || empty($email) || empty($password) || empty($skill_id)) {
         header('Location: freelancerSignup.php?error=All fields are required');
         exit();
@@ -27,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
     
-    // Check if email already exists
     $stmt = $conn->prepare("SELECT freelancer_id FROM freelancers WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -38,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
     
-    // Check if user failed test in last 24 hours
     $stmt = $conn->prepare("
         SELECT attempt_id FROM freelancer_test_attempts 
         WHERE freelancer_email = ? 
@@ -54,15 +51,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
     
-    // Store signup data in session (don't create account yet - no hashing)
     $_SESSION['signup_data'] = [
         'fullname' => $fullname,
         'email' => $email,
-        'password' => $password, // Store plain password
+        'password' => $password,
         'skill_id' => $skill_id
     ];
     
-    // Get skill name for display
     $stmt = $conn->prepare("SELECT skill_name FROM skill_categories WHERE skill_id = ?");
     $stmt->bind_param("i", $skill_id);
     $stmt->execute();
@@ -70,7 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $skill = $skill_result->fetch_assoc();
     $_SESSION['skill_category'] = $skill['skill_name'];
     
-    // Redirect to test rules
     header('Location: freelancerTestrules.php');
     exit();
     

@@ -14,7 +14,6 @@ if (isset($_GET['id'])) {
     $job_id = intval($_GET['id']);
     $client_id = $_SESSION['client_id'];
     
-    // Verify job belongs to client
     $check = $conn->prepare("SELECT job_id FROM jobs WHERE job_id = ? AND client_id = ?");
     $check->bind_param("ii", $job_id, $client_id);
     $check->execute();
@@ -24,7 +23,6 @@ if (isset($_GET['id'])) {
         exit();
     }
     
-    // Close job
     $stmt = $conn->prepare("UPDATE jobs SET status = 'closed' WHERE job_id = ?");
     $stmt->bind_param("i", $job_id);
     

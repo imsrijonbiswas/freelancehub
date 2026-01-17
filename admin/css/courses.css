@@ -56,7 +56,6 @@
     font-style: italic;
 }
 
-/* Courses List */
 .courses-list {
     display: grid;
     gap: 20px;
@@ -150,7 +149,6 @@
     border-top: 1px solid #e0e0e0;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .skills-checkbox-grid {
         grid-template-columns: 1fr;

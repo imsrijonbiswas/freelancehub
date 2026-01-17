@@ -22,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
     
-    // Insert job
     $stmt = $conn->prepare("
         INSERT INTO jobs (client_id, skill_id, job_title, job_description, budget, status) 
         VALUES (?, ?, ?, ?, ?, 'open')

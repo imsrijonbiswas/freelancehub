@@ -110,7 +110,6 @@
     box-shadow: 0 6px 16px rgba(0, 162, 255, 0.4);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .result-content {
         padding: 40px 25px;

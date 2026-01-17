@@ -3,10 +3,8 @@
 
 $freelancer_id = $_SESSION['freelancer_id'];
 
-// Get job ID from query if viewing a conversation
 $selected_job_id = $_GET['job_id'] ?? 0;
 
-// Get all hired jobs with last message
 $jobs_query = $conn->query("
     SELECT 
         hf.job_id,
@@ -114,7 +112,6 @@ $jobs_query = $conn->query("
 </div>
 
 <script>
-// Auto-scroll to bottom
 const chatMessages = document.getElementById('chatMessages');
 if (chatMessages) {
     chatMessages.scrollTop = chatMessages.scrollHeight;

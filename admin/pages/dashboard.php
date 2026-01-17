@@ -1,22 +1,18 @@
 <?php
 // FreelanceHub/admin/pages/dashboard.php
 
-// Get total users count (freelancers + clients)
 $freelancers_query = $conn->query("SELECT COUNT(*) as total FROM freelancers");
 $clients_query = $conn->query("SELECT COUNT(*) as total FROM clients");
 $total_freelancers = $freelancers_query ? $freelancers_query->fetch_assoc()['total'] : 0;
 $total_clients = $clients_query ? $clients_query->fetch_assoc()['total'] : 0;
 $total_users = $total_freelancers + $total_clients;
 
-// Get total skills
 $skills_query = $conn->query("SELECT COUNT(*) as total FROM skill_categories");
 $total_skills = $skills_query ? $skills_query->fetch_assoc()['total'] : 0;
 
-// Get total courses
 $courses_query = $conn->query("SELECT COUNT(*) as total FROM courses");
 $total_courses = $courses_query ? $courses_query->fetch_assoc()['total'] : 0;
 
-// Get reported users with pending status
 $fraud_query = $conn->query("
     SELECT 
         f.freelancer_id,
@@ -33,7 +29,6 @@ $fraud_query = $conn->query("
 ");
 ?>
 
-<!-- Overview Section -->
 <div class="dashboard-section">
     <h2 class="section-title">Overview</h2>
     <div class="stats-grid">
@@ -52,7 +47,6 @@ $fraud_query = $conn->query("
     </div>
 </div>
 
-<!-- Users With Fraud Section -->
 <div class="dashboard-section">
     <div class="fraud-section">
         <h2 class="section-title">Users With Fraud</h2>

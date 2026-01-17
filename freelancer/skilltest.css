@@ -185,7 +185,6 @@
     font-style: italic;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .test-box {
         padding: 25px 20px;

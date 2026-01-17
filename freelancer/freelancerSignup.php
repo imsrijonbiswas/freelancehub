@@ -4,10 +4,8 @@ session_name("FREELANCER_SESSION");
 session_start();
 require '../db_config.php';
 
-// Get all skills from database
 $skills_query = $conn->query("SELECT skill_id, skill_name FROM skill_categories ORDER BY skill_name ASC");
 
-// Get messages
 $error = $_GET['error'] ?? '';
 
 $pageCSS = 'freelancer/freelancerSignup.css';

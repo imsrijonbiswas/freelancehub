@@ -3,7 +3,6 @@
 session_name("ADMIN_SESSION");
 session_start();
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
     header('Location: ../adminlogin.php');
     exit();
@@ -14,13 +13,11 @@ require '../../db_config.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $skill_name = trim($_POST['skill_name']);
     
-    // Validate input
     if (empty($skill_name)) {
         header('Location: ../dashboard.php?page=skills&error=Skill name is required');
         exit();
     }
     
-    // Check if skill already exists
     $check_stmt = $conn->prepare("SELECT skill_id FROM skill_categories WHERE skill_name = ?");
     $check_stmt->bind_param("s", $skill_name);
     $check_stmt->execute();
@@ -31,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
     
-    // Insert skill
     $stmt = $conn->prepare("INSERT INTO skill_categories (skill_name) VALUES (?)");
     $stmt->bind_param("s", $skill_name);
     

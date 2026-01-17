@@ -9,7 +9,6 @@ if ($skill_id == 0) {
     exit();
 }
 
-// Get skill name
 $skill_stmt = $conn->prepare("SELECT skill_name FROM skill_categories WHERE skill_id = ?");
 $skill_stmt->bind_param("i", $skill_id);
 $skill_stmt->execute();
@@ -21,7 +20,6 @@ if (!$skill) {
     exit();
 }
 
-// Get courses for this skill
 $courses_query = $conn->prepare("
     SELECT c.course_id, c.course_title, c.course_url
     FROM courses c

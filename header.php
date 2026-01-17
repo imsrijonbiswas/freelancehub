@@ -5,7 +5,6 @@
     <title>FreelanceHub</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Global CSS -->
     <link rel="stylesheet" href="/FreelanceHub/css/style.css">
 
     <?php if (isset($pageCSS)): ?>

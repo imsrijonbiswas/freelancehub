@@ -102,7 +102,6 @@
     font-style: italic;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .test-rules-container {
         padding: 40px 20px;

@@ -1,5 +1,4 @@
 /* FreelanceHub/admin/css/admin.css */
-/* General admin styles that apply to ALL pages */
 
 * {
     margin: 0;
@@ -18,7 +17,6 @@ body {
     min-height: 100vh;
 }
 
-/* ========== SIDEBAR (Structure for all pages) ========== */
 .admin-sidebar {
     width: 200px;
     background: #fff;
@@ -138,9 +136,7 @@ body {
     color: #1a1a1a;
 }
 
-/* ========== COMMON COMPONENTS (Used across all pages) ========== */
 
-/* Cards */
 .card {
     background: #fff;
     padding: 25px;
@@ -149,7 +145,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Tables */
 .data-table {
     width: 100%;
     border-collapse: collapse;
@@ -180,7 +175,6 @@ body {
     background-color: #fafafa;
 }
 
-/* Buttons */
 .btn-primary {
     background-color: #00a2ff;
     color: #fff;
@@ -240,7 +234,6 @@ body {
     transform: translateY(-1px);
 }
 
-/* Forms */
 .form-group {
     margin-bottom: 20px;
 }
@@ -273,7 +266,6 @@ body {
     box-shadow: 0 0 0 3px rgba(0, 162, 255, 0.1);
 }
 
-/* Messages */
 .error-message {
     background-color: #fee;
     color: #c33;
@@ -301,7 +293,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Empty State */
 .empty-state {
     text-align: center;
     padding: 40px 20px;
@@ -318,7 +309,6 @@ body {
     color: #666;
 }
 
-/* ========== RESPONSIVE ========== */
 @media (max-width: 1024px) {
     .admin-sidebar {
         width: 180px;

@@ -3,7 +3,6 @@
 
 $freelancer_id = $_SESSION['freelancer_id'];
 
-// Get freelancer details
 $profile_query = $conn->prepare("
     SELECT f.*, s.skill_name 
     FROM freelancers f

@@ -3,7 +3,7 @@ $DB_HOST = "localhost";
 $DB_USER = "root";
 $DB_PASS = "";
 $DB_NAME = "freelancehub";
-$DB_PORT = 3307; // IMPORTANT
+$DB_PORT = 3307;
 
 $conn = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME, $DB_PORT);
 

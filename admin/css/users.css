@@ -124,7 +124,7 @@
     color: #1565c0;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
     .users-stats {
         grid-template-columns: 1fr;

@@ -1,13 +1,10 @@
 <?php
 // FreelanceHub/admin/pages/quizzes.php
 
-// Get all skill categories for dropdown
 $skills_query = $conn->query("SELECT skill_id, skill_name FROM skill_categories ORDER BY skill_name");
 
-// Get filter
 $filter_skill = isset($_GET['skill']) ? intval($_GET['skill']) : 0;
 
-// Get all questions with their options
 if ($filter_skill > 0) {
     $questions_query = $conn->query("
         SELECT q.question_id, q.question_text, q.created_at, s.skill_name, s.skill_id
@@ -25,12 +22,10 @@ if ($filter_skill > 0) {
     ");
 }
 
-// Get success/error messages
 $message = $_GET['msg'] ?? '';
 $error = $_GET['error'] ?? '';
 ?>
 
-<!-- Messages -->
 <?php if ($message == 'added'): ?>
     <div class="success-message">Question added successfully!</div>
 <?php elseif ($message == 'deleted'): ?>
@@ -39,7 +34,6 @@ $error = $_GET['error'] ?? '';
     <div class="error-message"><?= htmlspecialchars($error) ?></div>
 <?php endif; ?>
 
-<!-- Add New Question Section -->
 <div class="quiz-section">
     <div class="section-header">
         <h2>Add New Question</h2>
@@ -109,7 +103,6 @@ $error = $_GET['error'] ?? '';
     </form>
 </div>
 
-<!-- Questions List Section -->
 <div class="quiz-section">
     <div class="section-header">
         <h2>All Questions</h2>

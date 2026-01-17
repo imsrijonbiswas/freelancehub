@@ -3,7 +3,6 @@
 session_name("ADMIN_SESSION");
 session_start();
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
     header('Location: ../adminlogin.php');
     exit();
@@ -16,11 +15,11 @@ if (isset($_GET['id']) && isset($_GET['type'])) {
     $user_type = $_GET['type'];
     
     if ($user_type == 'freelancer') {
-        // Delete freelancer
+        
         $stmt = $conn->prepare("DELETE FROM freelancers WHERE freelancer_id = ?");
         $stmt->bind_param("i", $user_id);
     } elseif ($user_type == 'client') {
-        // Delete client
+        
         $stmt = $conn->prepare("DELETE FROM clients WHERE client_id = ?");
         $stmt->bind_param("i", $user_id);
     } else {

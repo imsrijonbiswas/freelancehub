@@ -3,7 +3,6 @@
 
 $freelancer_id = $_SESSION['freelancer_id'];
 
-// Get all applications
 $apps_query = $conn->query("
     SELECT 
         ja.application_id,

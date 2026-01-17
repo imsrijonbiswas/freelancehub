@@ -1,6 +1,5 @@
 <?php
 // FreelanceHub/login.php
-// DON'T redirect if already logged in - show login page anyway
 $error = $_GET['error'] ?? '';
 
 $pageCSS = 'css/login.css';

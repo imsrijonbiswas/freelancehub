@@ -21,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
     
-    // Check if email is already taken by another user
     $check = $conn->prepare("SELECT freelancer_id FROM freelancers WHERE email = ? AND freelancer_id != ?");
     $check->bind_param("si", $email, $freelancer_id);
     $check->execute();
@@ -31,12 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
     
-    // Update profile
     $stmt = $conn->prepare("UPDATE freelancers SET full_name = ?, email = ?, bio = ? WHERE freelancer_id = ?");
     $stmt->bind_param("sssi", $full_name, $email, $bio, $freelancer_id);
     
     if ($stmt->execute()) {
-        // Update session
         $_SESSION['freelancer_name'] = $full_name;
         $_SESSION['freelancer_email'] = $email;
         

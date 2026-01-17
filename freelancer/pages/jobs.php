@@ -4,7 +4,6 @@
 $freelancer_id = $_SESSION['freelancer_id'];
 $skill_id = $_SESSION['freelancer_skill_id'];
 
-// Get available jobs for this skill
 $jobs_query = $conn->query("
     SELECT j.*, c.full_name as client_name, s.skill_name
     FROM jobs j

@@ -4,20 +4,17 @@
 // Get freelancer statistics
 $freelancer_id = $_SESSION['freelancer_id'];
 
-// Count total applications
 $apps_query = $conn->query("
     SELECT COUNT(*) as total FROM job_applications WHERE freelancer_id = $freelancer_id
 ");
 $total_applications = $apps_query->fetch_assoc()['total'] ?? 0;
 
-// Count available jobs for this skill
 $skill_id = $_SESSION['freelancer_skill_id'];
 $jobs_query = $conn->query("
     SELECT COUNT(*) as total FROM jobs WHERE skill_id = $skill_id
 ");
 $available_jobs = $jobs_query->fetch_assoc()['total'] ?? 0;
 
-// Get test score
 $score_query = $conn->prepare("
     SELECT score FROM freelancer_test_attempts 
     WHERE freelancer_email = ? AND passed = TRUE

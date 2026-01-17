@@ -4,7 +4,6 @@ session_name("FREELANCER_SESSION");
 session_start();
 require '../db_config.php';
 
-// Check if signup data exists
 if (!isset($_SESSION['signup_data']) || !isset($_SESSION['skill_category'])) {
     header('Location: freelancerSignup.php');
     exit();
@@ -12,14 +11,12 @@ if (!isset($_SESSION['signup_data']) || !isset($_SESSION['skill_category'])) {
 
 $skill_id = $_SESSION['signup_data']['skill_id'];
 
-// Initialize test session if not exists
 if (!isset($_SESSION['test_started'])) {
     $_SESSION['test_started'] = true;
     $_SESSION['test_start_time'] = time();
     $_SESSION['current_question'] = 1;
     $_SESSION['answers'] = [];
     
-    // Fetch 10 random questions for this skill category
     $stmt = $conn->prepare("
         SELECT q.question_id, q.question_text, q.skill_id
         FROM questions q
@@ -32,7 +29,6 @@ if (!isset($_SESSION['test_started'])) {
     $result = $stmt->get_result();
     
     if ($result->num_rows < 10) {
-        // Not enough questions
         header('Location: freelancerSignup.php?error=Not enough questions available for this skill. Please contact admin.');
         exit();
     }
@@ -41,7 +37,6 @@ if (!isset($_SESSION['test_started'])) {
     while ($row = $result->fetch_assoc()) {
         $question_id = $row['question_id'];
         
-        // Get options for this question
         $options_stmt = $conn->prepare("
             SELECT option_label, option_text, is_correct 
             FROM question_options 
@@ -69,12 +64,10 @@ if (!isset($_SESSION['test_started'])) {
     $_SESSION['test_questions'] = $questions;
 }
 
-// Handle answer submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['answer'])) {
     $current_q = $_SESSION['current_question'];
     $_SESSION['answers'][$current_q] = $_POST['answer'];
     
-    // Move to next question
     if ($current_q < 10) {
         $_SESSION['current_question']++;
     } else {
@@ -84,21 +77,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['answer'])) {
     }
 }
 
-// Get current question
 $current_question_num = $_SESSION['current_question'];
 $current_question_data = $_SESSION['test_questions'][$current_question_num - 1];
 
-// Calculate remaining time (2 minutes = 120 seconds)
 $elapsed_time = time() - $_SESSION['test_start_time'];
 $remaining_time = 120 - $elapsed_time;
 
-// Auto-submit if time is up
 if ($remaining_time <= 0) {
     header('Location: test_result.php');
     exit();
 }
 
-// Calculate progress percentage
 $progress_percentage = ($current_question_num / 10) * 100;
 
 $pageCSS = 'freelancer/skilltest.css';

@@ -3,7 +3,6 @@
 session_name("ADMIN_SESSION");
 session_start();
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
     header('Location: ../adminlogin.php');
     exit();
@@ -14,7 +13,6 @@ require '../../db_config.php';
 if (isset($_GET['id'])) {
     $skill_id = intval($_GET['id']);
     
-    // Delete skill (related questions and courses will be handled by CASCADE)
     $stmt = $conn->prepare("DELETE FROM skill_categories WHERE skill_id = ?");
     $stmt->bind_param("i", $skill_id);
     

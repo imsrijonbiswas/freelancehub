@@ -3,7 +3,6 @@
 session_name("CLIENT_SESSION");
 session_start();
 
-// Check if client is logged in
 if (!isset($_SESSION['client_id'])) {
     header('Location: ../login.php');
     exit();
@@ -11,10 +10,8 @@ if (!isset($_SESSION['client_id'])) {
 
 require '../db_config.php';
 
-// Get current page
 $page = $_GET['page'] ?? 'home';
 
-// Define available pages
 $pages = [
     'home' => 'Dashboard',
     'post-job' => 'Post Job',
@@ -27,11 +24,9 @@ $pages = [
 
 $pageTitle = $pages[$page] ?? 'Dashboard';
 
-// Get client info
 $client_id = $_SESSION['client_id'];
 $client_name = $_SESSION['client_name'];
 
-// Get unread messages count (placeholder for now)
 $unread_count = 0;
 ?>
 <!DOCTYPE html>

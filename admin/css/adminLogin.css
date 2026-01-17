@@ -140,7 +140,6 @@
     color: #00a2ff;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .login-content h1 {
         font-size: 2rem;

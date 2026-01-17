@@ -1,7 +1,6 @@
 <?php
 // FreelanceHub/admin/pages/skills.php
 
-// Get all skills with question count and course count
 $skills_query = $conn->query("
     SELECT 
         s.skill_id,
@@ -16,15 +15,12 @@ $skills_query = $conn->query("
     ORDER BY s.skill_name ASC
 ");
 
-// Get total count
 $total_skills = $skills_query->num_rows;
 
-// Get messages
 $message = $_GET['msg'] ?? '';
 $error = $_GET['error'] ?? '';
 ?>
 
-<!-- Messages -->
 <?php if ($message == 'added'): ?>
     <div class="success-message">Skill added successfully!</div>
 <?php elseif ($message == 'deleted'): ?>
@@ -33,7 +29,6 @@ $error = $_GET['error'] ?? '';
     <div class="error-message"><?= htmlspecialchars($error) ?></div>
 <?php endif; ?>
 
-<!-- Add New Skill Section -->
 <div class="skills-section">
     <div class="section-header">
         <h2>Add New Skill Category</h2>
@@ -51,7 +46,6 @@ $error = $_GET['error'] ?? '';
     </form>
 </div>
 
-<!-- Skills List Section -->
 <div class="skills-section">
     <div class="section-header">
         <h2>All Skill Categories (<?= $total_skills ?>)</h2>

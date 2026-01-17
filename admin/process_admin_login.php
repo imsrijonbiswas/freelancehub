@@ -1,6 +1,6 @@
 <?php
 // FreelanceHub/admin/process_admin_login.php
-// USE A SEPARATE SESSION FOR ADMIN
+
 session_name("ADMIN_SESSION");
 session_start();
 
