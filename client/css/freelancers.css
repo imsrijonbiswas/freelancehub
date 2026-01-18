@@ -1,0 +1,180 @@
+/* FreelanceHub/client/css/freelancers.css */
+
+.freelancers-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    font-size: 0.95rem;
+    color: #666;
+}
+
+.filter-form select {
+    padding: 10px 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    background: #fff;
+}
+
+.freelancers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.freelancer-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.freelancer-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.freelancer-avatar-large {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00a2ff 0%, #0090e0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.freelancer-avatar-large svg {
+    color: #fff;
+}
+
+.freelancer-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 5px;
+}
+
+.freelancer-skill {
+    display: inline-block;
+    background: #e3f2fd;
+    color: #1976d2;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.freelancer-bio {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.freelancer-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 20px 0;
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: #999;
+}
+
+.stat-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.stat-value.score {
+    color: #f57c00;
+}
+
+.stat-value.rating {
+    color: #ff9800;
+    font-size: 0.95rem;
+}
+
+.freelancer-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-contact {
+    padding: 10px 30px;
+    background: linear-gradient(135deg, #00a2ff 0%, #0090e0 100%);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-contact:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 162, 255, 0.3);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: #fff;
+    border-radius: 12px;
+}
+
+.empty-state svg {
+    margin-bottom: 20px;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    
+    .freelancers-grid {
+        grid-template-columns: 1fr;
+    }
+}

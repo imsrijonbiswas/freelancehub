@@ -1,0 +1,214 @@
+/* FreelanceHub/client/css/payments.css */
+
+.payments-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.total-spent {
+    background: linear-gradient(135deg, #00a2ff 0%, #0090e0 100%);
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+}
+
+.total-spent strong {
+    font-size: 1.5rem;
+    margin-left: 10px;
+}
+
+.section {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-bottom: 25px;
+}
+
+.section h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+}
+
+.pending-payments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.payment-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #00a2ff;
+}
+
+.payment-info h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.freelancer-name {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.amount {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2e7d32;
+}
+
+.payment-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.amount-input {
+    width: 120px;
+    padding: 10px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.btn-pay {
+    padding: 10px 25px;
+    background: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-pay:hover {
+    background: #388e3c;
+    transform: translateY(-2px);
+}
+
+.payments-table-wrapper {
+    overflow-x: auto;
+}
+
+.payments-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.payments-table thead {
+    background: #f8f9fa;
+}
+
+.payments-table th {
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #666;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.payments-table td {
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.95rem;
+}
+
+.payments-table tbody tr:hover {
+    background: #fafafa;
+}
+
+.amount-cell {
+    font-weight: 700;
+    color: #2e7d32;
+    font-size: 1.05rem;
+}
+
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status-badge.completed {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-badge.pending {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+.status-badge.failed {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.no-data {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+}
+
+.success-message {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #4caf50;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    
+    .payment-card {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .payment-form {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .amount-input {
+        width: 100%;
+    }
+    
+    .btn-pay {
+        width: 100%;
+    }
+}
