@@ -1,7 +1,6 @@
 <?php
 // FreelanceHub/client/pages/post-job.php
 
-// Get all skills for dropdown
 $skills_query = $conn->query("SELECT skill_id, skill_name FROM skill_categories ORDER BY skill_name ASC");
 
 $message = $_GET['msg'] ?? '';

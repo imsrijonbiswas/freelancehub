@@ -2,7 +2,6 @@
 // FreelanceHub/client/pages/dashboard.php
 $pageCSS = 'client/css/dashboard_content.css';
 
-// Fetch statistics
 $ongoingQuery = $conn->query("SELECT COUNT(*) as count FROM jobs WHERE client_id = $clientId AND status = 'ongoing'");
 $ongoing = $ongoingQuery->fetch_assoc()['count'];
 
@@ -12,7 +11,6 @@ $pending = $pendingQuery->fetch_assoc()['count'];
 $completedQuery = $conn->query("SELECT COUNT(*) as count FROM jobs WHERE client_id = $clientId AND status = 'completed'");
 $completed = $completedQuery->fetch_assoc()['count'];
 
-// Fetch ongoing jobs with freelancers
 $ongoingJobsQuery = $conn->query("
     SELECT j.job_id, j.title, j.status, f.name as freelancer_name, 
            j.created_at, a.status as application_status
@@ -24,7 +22,6 @@ $ongoingJobsQuery = $conn->query("
     LIMIT 3
 ");
 
-// Fetch pending proposals
 $proposalsQuery = $conn->query("
     SELECT j.job_id, j.title, a.proposal, f.name as freelancer_name
     FROM jobs j
@@ -35,7 +32,6 @@ $proposalsQuery = $conn->query("
     LIMIT 3
 ");
 
-// Fetch saved freelancers
 $savedQuery = $conn->query("
     SELECT f.freelancer_id, f.name, f.skills, fr.avg_rating
     FROM saved_freelancers sf
@@ -50,7 +46,6 @@ $savedQuery = $conn->query("
     LIMIT 3
 ");
 
-// Fetch recent messages
 $messagesQuery = $conn->query("
     SELECT m.message_id, m.message, m.sent_at, f.name as freelancer_name
     FROM messages m
@@ -60,14 +55,12 @@ $messagesQuery = $conn->query("
     LIMIT 3
 ");
 
-// Fetch payment summary
 $balanceQuery = $conn->query("SELECT COALESCE(SUM(amount), 0) as total FROM payments WHERE client_id = $clientId");
 $totalSpent = $balanceQuery->fetch_assoc()['total'];
 
 $lastPaymentQuery = $conn->query("SELECT amount, payment_date FROM payments WHERE client_id = $clientId ORDER BY payment_date DESC LIMIT 1");
 $lastPayment = $lastPaymentQuery->fetch_assoc();
 
-// Fetch recommended jobs (based on active skills)
 $recommendedQuery = $conn->query("
     SELECT j.job_id, j.title, j.description, j.required_skills, j.posted_date, c.name as category
     FROM jobs j
@@ -96,7 +89,6 @@ $recommendedQuery = $conn->query("
         </a>
     </div>
 
-    <!-- Quick Action Cards -->
     <div class="action-cards">
         <div class="action-card primary">
             <div class="action-icon">
@@ -129,7 +121,6 @@ $recommendedQuery = $conn->query("
         </div>
     </div>
 
-    <!-- Stats Overview -->
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-header">
@@ -171,9 +162,7 @@ $recommendedQuery = $conn->query("
         </div>
     </div>
 
-    <!-- Main Content Grid -->
     <div class="content-grid">
-        <!-- Ongoing Jobs -->
         <div class="content-card">
             <div class="card-header">
                 <h3>Ongoing Job</h3>
@@ -205,7 +194,6 @@ $recommendedQuery = $conn->query("
             </div>
         </div>
 
-        <!-- Pending Proposals -->
         <div class="content-card">
             <div class="card-header">
                 <h3>Pending Proposals</h3>
@@ -228,7 +216,6 @@ $recommendedQuery = $conn->query("
             </div>
         </div>
 
-        <!-- Saved Freelancers -->
         <div class="content-card">
             <div class="card-header">
                 <h3>Saved Freelancers</h3>
@@ -265,7 +252,6 @@ $recommendedQuery = $conn->query("
             </div>
         </div>
 
-        <!-- Recommended Jobs -->
         <div class="content-card">
             <div class="card-header">
                 <h3>Recommended Jobs</h3>
@@ -293,7 +279,6 @@ $recommendedQuery = $conn->query("
             </div>
         </div>
 
-        <!-- Messages -->
         <div class="content-card">
             <div class="card-header">
                 <h3>Messages</h3>
@@ -322,7 +307,6 @@ $recommendedQuery = $conn->query("
             </div>
         </div>
 
-        <!-- Payment Summary -->
         <div class="content-card">
             <div class="card-header">
                 <h3>Payment Summary</h3>

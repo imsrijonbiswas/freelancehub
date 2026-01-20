@@ -375,7 +375,6 @@
     color: #dc2626;
 }
 
-/* Empty State */
 .empty-state {
     text-align: center;
     padding: 80px 20px;
@@ -417,7 +416,6 @@
     box-shadow: 0 6px 16px rgba(0, 162, 255, 0.4);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .jobs-header {
         flex-direction: column;

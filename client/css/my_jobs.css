@@ -101,6 +101,15 @@
     color: #666;
 }
 
+.hired-tag {
+    background: #dcfce7;
+    color: #16a34a;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
 .job-date {
     font-size: 0.9rem;
     color: #999;
@@ -110,6 +119,87 @@
     color: #555;
     line-height: 1.6;
     margin-bottom: 20px;
+}
+
+.hired-freelancer-info {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    border-left: 4px solid #00a2ff;
+}
+
+.hired-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.hired-badge {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.hired-badge svg {
+    color: #16a34a;
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
+.hired-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.hired-badge h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 4px 0;
+}
+
+.hired-email {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.hired-date {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 5px;
+}
+
+.hired-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-report {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: #fff;
+    border: 1px solid #dc2626;
+    border-radius: 6px;
+    color: #dc2626;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-report:hover {
+    background: #fee2e2;
+    transform: translateY(-1px);
+}
+
+.btn-report svg {
+    flex-shrink: 0;
 }
 
 .job-card-footer {
@@ -162,7 +252,6 @@
     color: #fff;
 }
 
-/* Applications Section */
 .applications-section {
     margin-top: 20px;
     padding: 20px;
@@ -281,12 +370,151 @@
 }
 
 .success-message {
-    background: #e8f5e9;
-    color: #2e7d32;
+    background: #dcfce7;
+    color: #16a34a;
     padding: 15px;
     border-radius: 8px;
     border-left: 4px solid #4caf50;
     margin-bottom: 20px;
+}
+
+.error-message {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #ef4444;
+    margin-bottom: 20px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 550px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+    color: #999;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: #333;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #1a1a1a;
+    font-size: 1.5rem;
+}
+
+.report-info {
+    color: #666;
+    margin-bottom: 20px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.report-info strong {
+    color: #1a1a1a;
+}
+
+.modal .form-group {
+    margin-bottom: 20px;
+}
+
+.modal .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.modal select,
+.modal textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
+.modal select:focus,
+.modal textarea:focus {
+    outline: none;
+    border-color: #00a2ff;
+    box-shadow: 0 0 0 3px rgba(0, 162, 255, 0.1);
+}
+
+.modal textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.btn-cancel {
+    padding: 10px 24px;
+    background: #f3f4f6;
+    border: none;
+    border-radius: 8px;
+    color: #666;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.btn-cancel:hover {
+    background: #e5e7eb;
+}
+
+.btn-submit-report {
+    padding: 10px 24px;
+    background: #dc2626;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.btn-submit-report:hover {
+    background: #b91c1c;
+    transform: translateY(-1px);
 }
 
 @media (max-width: 768px) {
@@ -315,4 +543,89 @@
         width: 100%;
         align-items: stretch;
     }
+    
+    .hired-details {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .hired-actions {
+        justify-content: flex-start;
+    }
+    
+    .modal-content {
+        margin: 10% auto;
+        padding: 20px;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+    }
+    
+    .btn-cancel,
+    .btn-submit-report {
+        width: 100%;
+    }
+}
+
+.hired-tag {
+    background: #dcfce7;
+    color: #16a34a;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.hired-freelancer-info {
+    background: linear-gradient(135deg, #d4f1ff 0%, #e8f7ff 100%);
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.hired-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #16a34a;
+}
+
+.hired-badge svg {
+    color: #16a34a;
+}
+
+.hired-date {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.btn-view-profile {
+    margin-left: auto;
+    padding: 8px 16px;
+    background: #00a2ff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-view-profile:hover {
+    background: #0090e0;
+    transform: translateY(-1px);
+}
+
+.error-message {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #ef4444;
+    margin-bottom: 20px;
 }

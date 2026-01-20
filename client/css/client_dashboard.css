@@ -13,7 +13,6 @@ body {
     display: flex;
     min-height: 100vh;
 }
-/* SIDEBAR STYLES */
 .sidebar {
     width: 260px;
     background: linear-gradient(180deg, #ffffff 0%, #f8f9fb 100%);
@@ -32,9 +31,6 @@ body {
     margin-left: 20px;
     /* border-bottom: 1px solid #e5e7eb; */
 }
-/* .logo {
-        
-} */
 
 .logo-link {
     display: flex;
@@ -133,7 +129,7 @@ body {
 .logout:hover {
     background-color: #fef2f2;
 }
-/* CONTENT AREA */
+
 .content {
     margin-left: 260px;
     flex: 1;
@@ -150,7 +146,6 @@ body {
     border-left: 4px solid #2196f3;
 }
 
-/* RESPONSIVE */
 @media (max-width: 1024px) {
     .sidebar {
         width: 220px;

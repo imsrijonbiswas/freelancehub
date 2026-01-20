@@ -111,7 +111,7 @@ $error = $_GET['error'] ?? '';
             <select name="skill" onchange="this.form.submit()">
                 <option value="0">All Skills</option>
                 <?php 
-                $skills_query->data_seek(0); // Reset pointer
+                $skills_query->data_seek(0);
                 while ($skill = $skills_query->fetch_assoc()): 
                 ?>
                     <option value="<?= $skill['skill_id'] ?>" <?= $filter_skill == $skill['skill_id'] ? 'selected' : '' ?>>
@@ -126,7 +126,6 @@ $error = $_GET['error'] ?? '';
         <div class="questions-list">
             <?php while ($question = $questions_query->fetch_assoc()): ?>
                 <?php
-                // Get options for this question
                 $qid = $question['question_id'];
                 $options_query = $conn->query("
                     SELECT option_label, option_text, is_correct 

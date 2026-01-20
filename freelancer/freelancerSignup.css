@@ -176,7 +176,6 @@
     text-decoration: underline;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .signup-content h1 {
         font-size: 2rem;

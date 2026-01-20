@@ -71,7 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['answer'])) {
     if ($current_q < 10) {
         $_SESSION['current_question']++;
     } else {
-        // Test completed
         header('Location: test_result.php');
         exit();
     }

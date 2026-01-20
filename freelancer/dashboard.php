@@ -16,6 +16,7 @@ $pages = [
     'home' => 'Dashboard',
     'jobs' => 'Browse Jobs',
     'applications' => 'My Applications',
+    'earnings' => 'My Earnings',
     'messages' => 'Messages',
     'profile' => 'My Profile'
 ];
@@ -77,9 +78,9 @@ $unread_count = $unread_query->fetch_assoc()['unread_count'] ?? 0;
                     <a href="dashboard.php?page=<?= $key ?>" 
                        class="nav-item <?= $page === $key ? 'active' : '' ?>">
                         <?= htmlspecialchars($label) ?>
-                        <?php if ($key === 'messages' && $unread_count > 0): ?>
+                        <!-- <?php if ($key === 'messages' && $unread_count > 0): ?>
                             <span class="badge"><?= $unread_count ?></span>
-                        <?php endif; ?>
+                        <?php endif; ?> -->
                     </a>
                 <?php endforeach; ?>
             </nav>

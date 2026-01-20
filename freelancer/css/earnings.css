@@ -1,0 +1,254 @@
+/* FreelanceHub/freelancer/css/earnings.css */
+
+.earnings-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.page-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.total-earned {
+    background: linear-gradient(135deg, #d4f1ff 0%, #e8f7ff 100%);
+    padding: 16px 28px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 162, 255, 0.15);
+}
+
+.total-earned span {
+    font-size: 1rem;
+    color: #666;
+    margin-right: 12px;
+    font-weight: 500;
+}
+
+.total-earned strong {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #00a2ff;
+}
+
+.section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+}
+
+.section h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+}
+
+.pending-earnings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.earning-card {
+    background: linear-gradient(135deg, #fff8f0 0%, #fff 100%);
+    border: 1px solid #ffe0b2;
+    border-left: 4px solid #ff9800;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.earning-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.15);
+}
+
+.earning-info h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.client-name {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.pending-amount {
+    display: inline-block;
+    background: #fff3e0;
+    color: #f57c00;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.pending-status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+}
+
+.pending-status svg {
+    color: #ff9800;
+}
+
+.pending-status span {
+    font-size: 0.85rem;
+    color: #f57c00;
+    font-weight: 600;
+}
+
+.earnings-table-wrapper {
+    overflow-x: auto;
+}
+
+.earnings-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.earnings-table thead {
+    background: #f8f9fa;
+}
+
+.earnings-table th {
+    padding: 16px;
+    text-align: left;
+    font-weight: 600;
+    color: #555;
+    font-size: 0.9rem;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.earnings-table td {
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.earnings-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.earnings-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.amount-cell {
+    font-weight: 700;
+    color: #16a34a;
+    font-size: 1.05rem;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status-badge.completed {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-badge.pending {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+.status-badge.failed {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.no-data {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.no-data svg {
+    margin-bottom: 20px;
+}
+
+.no-data p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.no-data .subtext {
+    font-size: 0.95rem;
+    color: #999;
+}
+
+.success-message {
+    background: #dcfce7;
+    color: #16a34a;
+    padding: 15px 20px;
+    border-radius: 8px;
+    border-left: 4px solid #4caf50;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .total-earned {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .earning-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .pending-status {
+        width: 100%;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+    
+    .earnings-table {
+        font-size: 0.85rem;
+    }
+    
+    .earnings-table th,
+    .earnings-table td {
+        padding: 12px 8px;
+    }
+}

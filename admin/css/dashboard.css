@@ -1,5 +1,4 @@
 /* FreelanceHub/admin/css/dashboard.css */
-/* Dashboard page specific styles ONLY */
 
 .dashboard-section {
     margin-bottom: 30px;
@@ -111,5 +110,155 @@
     
     .stat-number {
         font-size: 2rem;
+    }
+}
+
+.reports-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.report-card {
+    background: #fff;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.reported-user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.reported-user-info h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.user-type-badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.user-type-badge.freelancer {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+.user-type-badge.client {
+    background: #fff4e6;
+    color: #f57c00;
+}
+
+.report-date {
+    font-size: 0.85rem;
+    color: #999;
+}
+
+.report-details {
+    margin-bottom: 16px;
+}
+
+.report-email {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 12px;
+}
+
+.report-reason,
+.report-message {
+    margin-bottom: 12px;
+}
+
+.report-reason strong,
+.report-message strong {
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.report-message p {
+    margin-top: 6px;
+    color: #555;
+    line-height: 1.6;
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.reporter-info {
+    font-size: 0.85rem;
+    color: #999;
+    margin-top: 8px;
+}
+
+.report-actions {
+    display: flex;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.btn-review {
+    padding: 8px 20px;
+    background: #4caf50;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-review:hover {
+    background: #388e3c;
+}
+
+.btn-suspend {
+    padding: 8px 20px;
+    background: #f44336;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-suspend:hover {
+    background: #d32f2f;
+}
+
+@media (max-width: 768px) {
+    .report-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .report-actions {
+        flex-direction: column;
+    }
+    
+    .btn-review,
+    .btn-suspend {
+        width: 100%;
+        text-align: center;
     }
 }

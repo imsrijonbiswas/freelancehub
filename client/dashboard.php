@@ -40,7 +40,6 @@ $unread_count = 0;
 </head>
 <body>
     <div class="client-layout">
-        <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <div class="logo">
@@ -112,7 +111,6 @@ $unread_count = 0;
             </div>
         </aside>
 
-        <!-- CONTENT -->
         <main class="content">
             <?php
             $pageFile = $page . '.php';

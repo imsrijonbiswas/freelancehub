@@ -15,17 +15,34 @@ $total_courses = $courses_query ? $courses_query->fetch_assoc()['total'] : 0;
 
 $fraud_query = $conn->query("
     SELECT 
-        f.freelancer_id,
-        f.full_name,
-        f.email,
-        f.created_at,
-        COUNT(r.report_id) as report_count
+        r.report_id,
+        r.reported_user_id,
+        r.reported_user_type,
+        r.report_reason,
+        r.report_message,
+        r.created_at,
+        CASE 
+            WHEN r.reported_user_type = 'freelancer' THEN f.full_name
+            WHEN r.reported_user_type = 'client' THEN c.full_name
+        END as reported_user_name,
+        CASE 
+            WHEN r.reported_user_type = 'freelancer' THEN f.email
+            WHEN r.reported_user_type = 'client' THEN c.email
+        END as reported_user_email,
+        CASE 
+            WHEN r.reporter_type = 'freelancer' THEN rf.full_name
+            WHEN r.reporter_type = 'client' THEN rc.full_name
+            ELSE 'System'
+        END as reporter_name,
+        COUNT(r.report_id) OVER (PARTITION BY r.reported_user_id) as report_count
     FROM user_reports r
-    JOIN freelancers f ON f.freelancer_id = r.reported_user_id
+    LEFT JOIN freelancers f ON r.reported_user_id = f.freelancer_id AND r.reported_user_type = 'freelancer'
+    LEFT JOIN clients c ON r.reported_user_id = c.client_id AND r.reported_user_type = 'client'
+    LEFT JOIN freelancers rf ON r.reporter_id = rf.freelancer_id AND r.reporter_type = 'freelancer'
+    LEFT JOIN clients rc ON r.reporter_id = rc.client_id AND r.reporter_type = 'client'
     WHERE r.status = 'pending'
-    GROUP BY f.freelancer_id
-    ORDER BY report_count DESC, r.created_at DESC
-    LIMIT 10
+    ORDER BY r.created_at DESC
+    LIMIT 15
 ");
 ?>
 
@@ -49,36 +66,49 @@ $fraud_query = $conn->query("
 
 <div class="dashboard-section">
     <div class="fraud-section">
-        <h2 class="section-title">Users With Fraud</h2>
+        <h2 class="section-title">Reported Users</h2>
         
         <?php if ($fraud_query && $fraud_query->num_rows > 0): ?>
-            <div class="fraud-table-wrapper">
-                <table class="fraud-table">
-                    <thead>
-                        <tr>
-                            <th>User</th>
-                            <th>Email</th>
-                            <th>Joined</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($row = $fraud_query->fetch_assoc()): ?>
-                            <tr>
-                                <td><?= htmlspecialchars($row['full_name']) ?></td>
-                                <td><?= htmlspecialchars($row['email']) ?></td>
-                                <td><?= date('F d, Y', strtotime($row['created_at'])) ?></td>
-                                <td>
-                                    <a href="actions/suspend_user.php?id=<?= $row['freelancer_id'] ?>" 
-                                       class="btn-suspend"
-                                       onclick="return confirm('Are you sure you want to suspend this user?')">
-                                        Suspend
-                                    </a>
-                                </td>
-                            </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
+            <div class="reports-list">
+                <?php while ($row = $fraud_query->fetch_assoc()): ?>
+                    <div class="report-card">
+                        <div class="report-header">
+                            <div class="reported-user-info">
+                                <h4><?= htmlspecialchars($row['reported_user_name']) ?></h4>
+                                <span class="user-type-badge <?= $row['reported_user_type'] ?>">
+                                    <?= ucfirst($row['reported_user_type']) ?>
+                                </span>
+                            </div>
+                            <span class="report-date"><?= date('M d, Y', strtotime($row['created_at'])) ?></span>
+                        </div>
+                        
+                        <div class="report-details">
+                            <p class="report-email"><?= htmlspecialchars($row['reported_user_email']) ?></p>
+                            <div class="report-reason">
+                                <strong>Reason:</strong> <?= htmlspecialchars($row['report_reason']) ?>
+                            </div>
+                            <div class="report-message">
+                                <strong>Details:</strong>
+                                <p><?= nl2br(htmlspecialchars($row['report_message'])) ?></p>
+                            </div>
+                            <p class="reporter-info">
+                                <small>Reported by: <?= htmlspecialchars($row['reporter_name']) ?></small>
+                            </p>
+                        </div>
+                        
+                        <div class="report-actions">
+                            <a href="actions/review_report.php?id=<?= $row['report_id'] ?>" 
+                               class="btn-review">
+                                Mark as Reviewed
+                            </a>
+                            <a href="actions/suspend_user.php?type=<?= $row['reported_user_type'] ?>&id=<?= $row['reported_user_id'] ?>&report=<?= $row['report_id'] ?>" 
+                               class="btn-suspend"
+                               onclick="return confirm('Are you sure you want to suspend this user?')">
+                                Suspend User
+                            </a>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
             </div>
         <?php else: ?>
             <div class="empty-state">
@@ -86,7 +116,7 @@ $fraud_query = $conn->query("
                     <circle cx="32" cy="32" r="32" fill="#f0f0f0"/>
                     <path d="M32 20v24M20 32h24" stroke="#ccc" stroke-width="3" stroke-linecap="round"/>
                 </svg>
-                <p>No reported users at the moment</p>
+                <p>No pending reports at the moment</p>
             </div>
         <?php endif; ?>
     </div>

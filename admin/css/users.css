@@ -154,3 +154,107 @@
         padding: 10px;
     }
 }
+
+.report-count {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-align: center;
+    min-width: 35px;
+}
+
+.report-count.clean {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.report-count.warning {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+.users-table th:nth-child(6),
+.users-table td:nth-child(6) {
+    text-align: center;
+}
+
+.filter-container {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.status-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.status-btn {
+    padding: 8px 16px;
+    background: #f3f4f6;
+    color: #666;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.status-btn:hover {
+    background: #e5e7eb;
+}
+
+.status-btn.active {
+    background: #00a2ff;
+    color: #fff;
+}
+
+.stat-card-small.suspended {
+    background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
+}
+
+.stat-card-small.suspended .stat-number-small {
+    color: #dc2626;
+}
+
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-badge.active {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.status-badge.suspended {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.btn-success {
+    background: #4caf50;
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    background: #388e3c;
+}
+
+@media (max-width: 768px) {
+    .filter-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+}

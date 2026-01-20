@@ -3,7 +3,6 @@
 
 $client_id = $_SESSION['client_id'];
 
-// Get statistics
 $total_jobs_query = $conn->query("SELECT COUNT(*) as total FROM jobs WHERE client_id = $client_id");
 $total_jobs = $total_jobs_query->fetch_assoc()['total'] ?? 0;
 
@@ -13,7 +12,6 @@ $open_jobs = $open_jobs_query->fetch_assoc()['total'] ?? 0;
 $hired_query = $conn->query("SELECT COUNT(DISTINCT freelancer_id) as total FROM hired_freelancers WHERE client_id = $client_id");
 $total_hired = $hired_query->fetch_assoc()['total'] ?? 0;
 
-// Get recent jobs
 $recent_jobs_query = $conn->query("
     SELECT j.*, s.skill_name,
            (SELECT COUNT(*) FROM job_applications WHERE job_id = j.job_id) as application_count
@@ -35,7 +33,6 @@ $recent_jobs_query = $conn->query("
         </div>
     </div>
 
-    <!-- Quick Actions -->
     <div class="action-cards">
         <div class="action-card primary">
             <div class="action-icon">
@@ -68,7 +65,6 @@ $recent_jobs_query = $conn->query("
         </div>
     </div>
 
-    <!-- Stats Overview -->
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-header">
@@ -111,7 +107,6 @@ $recent_jobs_query = $conn->query("
         </div>
     </div>
 
-    <!-- Recent Jobs -->
     <div class="content-card">
         <div class="card-header">
             <h3>Recent Jobs</h3>
@@ -151,140 +146,4 @@ $recent_jobs_query = $conn->query("
     </div>
 </div>
 
-<style>
-.view-all-link {
-    color: #00a2ff;
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 600;
-    transition: color 0.2s ease;
-}
-
-.view-all-link:hover {
-    color: #0090e0;
-}
-
-.jobs-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.job-item-home {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 16px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    transition: transform 0.2s ease;
-}
-
-.job-item-home:hover {
-    transform: translateX(4px);
-}
-
-.job-info-home {
-    flex: 1;
-}
-
-.job-info-home h4 {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: #1a1a1a;
-    margin-bottom: 10px;
-}
-
-.job-meta-home {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-    flex-wrap: wrap;
-}
-
-.skill-badge-small {
-    background: #e3f2fd;
-    color: #1976d2;
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.job-budget-small {
-    background: #e8f5e9;
-    color: #2e7d32;
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: 700;
-}
-
-.job-status-badge {
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.job-status-badge.open {
-    background: #fff3e0;
-    color: #f57c00;
-}
-
-.job-status-badge.closed {
-    background: #e0e0e0;
-    color: #666;
-}
-
-.job-desc-small {
-    font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 10px;
-}
-
-.job-footer-home {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.85rem;
-    color: #999;
-}
-
-.application-count {
-    font-weight: 600;
-    color: #00a2ff;
-}
-
-.btn-view-small {
-    padding: 8px 20px;
-    background: #00a2ff;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-.btn-view-small:hover {
-    background: #0090e0;
-    transform: translateY(-2px);
-}
-
-.btn-primary {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px 24px;
-    background: #00a2ff;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-.btn-primary:hover {
-    background: #0090e0;
-    transform: translateY(-2px);
-}
-</style>
+<link rel="stylesheet" href="css/client_home.css">

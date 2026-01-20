@@ -10,41 +10,57 @@ if (!isset($_SESSION['client_id'])) {
 
 require '../../db_config.php';
 
-if (isset($_GET['job_id']) && isset($_GET['freelancer_id'])) {
-    $job_id = intval($_GET['job_id']);
-    $freelancer_id = intval($_GET['freelancer_id']);
-    $client_id = $_SESSION['client_id'];
-    
-    $check = $conn->prepare("SELECT job_id, hired_freelancer_id FROM jobs WHERE job_id = ? AND client_id = ?");
-    $check->bind_param("ii", $job_id, $client_id);
-    $check->execute();
-    $job = $check->get_result()->fetch_assoc();
-    
-    if (!$job) {
-        header('Location: ../dashboard.php?page=jobs&error=Unauthorized');
-        exit();
-    }
-    
-    if ($job['hired_freelancer_id']) {
-        header('Location: ../dashboard.php?page=jobs&view_applications=' . $job_id . '&error=Already hired someone for this job');
-        exit();
-    }
-    
-    // Hire freelancer
-    $stmt = $conn->prepare("INSERT INTO hired_freelancers (job_id, freelancer_id, client_id, status) VALUES (?, ?, ?, 'active')");
-    $stmt->bind_param("iii", $job_id, $freelancer_id, $client_id);
-    
-    if ($stmt->execute()) {
-        $update = $conn->prepare("UPDATE jobs SET hired_freelancer_id = ?, status = 'closed' WHERE job_id = ?");
-        $update->bind_param("ii", $freelancer_id, $job_id);
-        $update->execute();
-        
-        header('Location: ../dashboard.php?page=jobs&msg=hired');
-    } else {
-        header('Location: ../dashboard.php?page=jobs&error=Failed to hire freelancer');
-    }
-} else {
-    header('Location: ../dashboard.php?page=jobs');
+$job_id = $_GET['job_id'] ?? 0;
+$freelancer_id = $_GET['freelancer_id'] ?? 0;
+$client_id = $_SESSION['client_id'];
+
+$check_query = $conn->prepare("SELECT is_hired, hired_freelancer_id FROM jobs WHERE job_id = ? AND client_id = ?");
+$check_query->bind_param("ii", $job_id, $client_id);
+$check_query->execute();
+$result = $check_query->get_result();
+
+if ($result->num_rows === 0) {
+    header('Location: ../dashboard.php?page=jobs&error=Job not found');
+    exit();
 }
+
+$job = $result->fetch_assoc();
+
+if ($job['is_hired'] || $job['hired_freelancer_id']) {
+    header('Location: ../dashboard.php?page=jobs&msg=already_hired');
+    exit();
+}
+
+$conn->begin_transaction();
+
+try {
+    $update_job = $conn->prepare("
+        UPDATE jobs 
+        SET hired_freelancer_id = ?, 
+            is_hired = TRUE, 
+            hired_at = NOW(),
+            status = 'closed'
+        WHERE job_id = ?
+    ");
+    $update_job->bind_param("ii", $freelancer_id, $job_id);
+    $update_job->execute();
+    
+    $insert_hire = $conn->prepare("
+        INSERT INTO hired_freelancers (job_id, freelancer_id, client_id, hired_at, status)
+        VALUES (?, ?, ?, NOW(), 'active')
+    ");
+    $insert_hire->bind_param("iii", $job_id, $freelancer_id, $client_id);
+    $insert_hire->execute();
+    
+    $conn->commit();
+    
+    header('Location: ../dashboard.php?page=jobs&msg=hired');
+    
+} catch (Exception $e) {
+    $conn->rollback();
+    header('Location: ../dashboard.php?page=jobs&error=Failed to hire freelancer');
+}
+
+$conn->close();
 exit();
 ?>

@@ -21,7 +21,6 @@ $message = $_GET['msg'] ?? '';
 $error = $_GET['error'] ?? '';
 ?>
 
-<!-- Messages -->
 <?php if ($message == 'added'): ?>
     <div class="success-message">Course added successfully!</div>
 <?php elseif ($message == 'deleted'): ?>
@@ -52,7 +51,7 @@ $error = $_GET['error'] ?? '';
             <label>Related Skills *</label>
             <div class="skills-checkbox-grid">
                 <?php 
-                $skills_query->data_seek(0); // Reset pointer
+                $skills_query->data_seek(0);
                 while ($skill = $skills_query->fetch_assoc()): 
                 ?>
                     <label class="checkbox-label">

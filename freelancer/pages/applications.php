@@ -11,6 +11,7 @@ $apps_query = $conn->query("
         j.job_description,
         j.budget,
         j.status as job_status,
+        c.client_id,
         c.full_name as client_name,
         s.skill_name,
         CASE 
@@ -36,7 +37,9 @@ $apps_query = $conn->query("
                     <div class="app-header">
                         <div>
                             <h3 class="app-job-title"><?= htmlspecialchars($app['job_title']) ?></h3>
-                            <span class="app-client">by <?= htmlspecialchars($app['client_name']) ?></span>
+                            <span class="app-client">
+                                by <a href="dashboard.php?page=client_profile&id=<?= $app['client_id'] ?>" class="client-name-link"><?= htmlspecialchars($app['client_name']) ?></a>
+                            </span>
                         </div>
                         <span class="status-badge <?= $app['application_status'] ?>">
                             <?= ucfirst($app['application_status']) ?>
@@ -67,139 +70,4 @@ $apps_query = $conn->query("
     <?php endif; ?>
 </div>
 
-<style>
-.applications-container {
-    padding: 20px 0;
-}
-
-.applications-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.application-card {
-    background: #fff;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    border-left: 4px solid #e0e0e0;
-}
-
-.application-card.status-hired {
-    border-left-color: #4caf50;
-    background: linear-gradient(to right, #f1f8f4 0%, #fff 10%);
-}
-
-.application-card.status-rejected {
-    border-left-color: #ff3b3b;
-    background: linear-gradient(to right, #fff0f0 0%, #fff 10%);
-}
-
-.application-card.status-pending {
-    border-left-color: #ff9800;
-    background: linear-gradient(to right, #fff8f0 0%, #fff 10%);
-}
-
-.app-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 15px;
-    gap: 15px;
-}
-
-.app-job-title {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin: 0 0 5px 0;
-}
-
-.app-client {
-    font-size: 0.9rem;
-    color: #666;
-}
-
-.status-badge {
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-}
-
-.status-badge.hired {
-    background: #e8f5e9;
-    color: #2e7d32;
-}
-
-.status-badge.rejected {
-    background: #ffebee;
-    color: #c62828;
-}
-
-.status-badge.pending {
-    background: #fff3e0;
-    color: #f57c00;
-}
-
-.app-description {
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    font-size: 0.95rem;
-}
-
-.app-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 15px;
-    border-top: 1px solid #f0f0f0;
-}
-
-.app-meta {
-    display: flex;
-    gap: 10px;
-}
-
-.skill-tag {
-    background: #e3f2fd;
-    color: #1976d2;
-    padding: 5px 12px;
-    border-radius: 15px;
-    font-size: 0.85rem;
-    font-weight: 600;
-}
-
-.budget-tag {
-    background: #e8f5e9;
-    color: #2e7d32;
-    padding: 5px 12px;
-    border-radius: 15px;
-    font-size: 0.85rem;
-    font-weight: 700;
-}
-
-.applied-date {
-    font-size: 0.85rem;
-    color: #999;
-}
-
-.btn-primary {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 12px 30px;
-    background: #00a2ff;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-.btn-primary:hover {
-    background: #0090e0;
-    transform: translateY(-2px);
-}
-</style>
+<link rel="stylesheet" href="css/applications.css">

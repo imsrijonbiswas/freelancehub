@@ -1,5 +1,5 @@
 <?php
-// index.php
+// FreelanceHub/index.php
 include 'header.php';
 ?>
 

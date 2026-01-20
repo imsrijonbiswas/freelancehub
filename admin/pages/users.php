@@ -1,50 +1,75 @@
 <?php
 // FreelanceHub/admin/pages/users.php
 
-$filter_type = $_GET['type'] ?? 'all'; // all, freelancers, clients
+$filter_type = $_GET['type'] ?? 'all';
+$filter_status = $_GET['status'] ?? 'active';
 
-$total_freelancers = $conn->query("SELECT COUNT(*) as total FROM freelancers")->fetch_assoc()['total'] ?? 0;
-$total_clients = $conn->query("SELECT COUNT(*) as total FROM clients")->fetch_assoc()['total'] ?? 0;
+$total_freelancers = $conn->query("SELECT COUNT(*) as total FROM freelancers WHERE is_suspended = FALSE")->fetch_assoc()['total'] ?? 0;
+$total_clients = $conn->query("SELECT COUNT(*) as total FROM clients WHERE is_suspended = FALSE")->fetch_assoc()['total'] ?? 0;
+$suspended_freelancers = $conn->query("SELECT COUNT(*) as total FROM freelancers WHERE is_suspended = TRUE")->fetch_assoc()['total'] ?? 0;
+$suspended_clients = $conn->query("SELECT COUNT(*) as total FROM clients WHERE is_suspended = TRUE")->fetch_assoc()['total'] ?? 0;
+
+$suspend_condition = $filter_status == 'suspended' ? 'TRUE' : 'FALSE';
 
 if ($filter_type == 'freelancers') {
     $users_query = $conn->query("
         SELECT 
-            freelancer_id as user_id,
-            full_name,
-            email,
-            created_at,
-            'Freelancer' as user_type
-        FROM freelancers
-        ORDER BY created_at DESC
+            f.freelancer_id as user_id,
+            f.full_name,
+            f.email,
+            f.created_at,
+            f.is_suspended,
+            'freelancer' as user_type,
+            (SELECT COUNT(*) FROM user_reports 
+             WHERE reported_user_id = f.freelancer_id 
+             AND reported_user_type = 'freelancer') as report_count
+        FROM freelancers f
+        WHERE f.is_suspended = $suspend_condition
+        ORDER BY f.created_at DESC
     ");
 } elseif ($filter_type == 'clients') {
     $users_query = $conn->query("
         SELECT 
-            client_id as user_id,
-            full_name,
-            email,
-            created_at,
-            'Client' as user_type
-        FROM clients
-        ORDER BY created_at DESC
+            c.client_id as user_id,
+            c.full_name,
+            c.email,
+            c.created_at,
+            c.is_suspended,
+            'client' as user_type,
+            (SELECT COUNT(*) FROM user_reports 
+             WHERE reported_user_id = c.client_id 
+             AND reported_user_type = 'client') as report_count
+        FROM clients c
+        WHERE c.is_suspended = $suspend_condition
+        ORDER BY c.created_at DESC
     ");
 } else {
     $users_query = $conn->query("
         SELECT 
-            freelancer_id as user_id,
-            full_name,
-            email,
-            created_at,
-            'Freelancer' as user_type
-        FROM freelancers
+            f.freelancer_id as user_id,
+            f.full_name,
+            f.email,
+            f.created_at,
+            f.is_suspended,
+            'freelancer' as user_type,
+            (SELECT COUNT(*) FROM user_reports 
+             WHERE reported_user_id = f.freelancer_id 
+             AND reported_user_type = 'freelancer') as report_count
+        FROM freelancers f
+        WHERE f.is_suspended = $suspend_condition
         UNION ALL
         SELECT 
-            client_id as user_id,
-            full_name,
-            email,
-            created_at,
-            'Client' as user_type
-        FROM clients
+            c.client_id as user_id,
+            c.full_name,
+            c.email,
+            c.created_at,
+            c.is_suspended,
+            'client' as user_type,
+            (SELECT COUNT(*) FROM user_reports 
+             WHERE reported_user_id = c.client_id 
+             AND reported_user_type = 'client') as report_count
+        FROM clients c
+        WHERE c.is_suspended = $suspend_condition
         ORDER BY created_at DESC
     ");
 }
@@ -53,8 +78,10 @@ $message = $_GET['msg'] ?? '';
 $error = $_GET['error'] ?? '';
 ?>
 
-<?php if ($message == 'deleted'): ?>
-    <div class="success-message">User deleted successfully!</div>
+<?php if ($message == 'suspended'): ?>
+    <div class="success-message">User suspended successfully!</div>
+<?php elseif ($message == 'activated'): ?>
+    <div class="success-message">User activated successfully!</div>
 <?php elseif ($error): ?>
     <div class="error-message"><?= htmlspecialchars($error) ?></div>
 <?php endif; ?>
@@ -62,34 +89,46 @@ $error = $_GET['error'] ?? '';
 <div class="users-stats">
     <div class="stat-card-small">
         <span class="stat-number-small"><?= $total_freelancers ?></span>
-        <span class="stat-label-small">Freelancers</span>
+        <span class="stat-label-small">Active Freelancers</span>
     </div>
     <div class="stat-card-small">
         <span class="stat-number-small"><?= $total_clients ?></span>
-        <span class="stat-label-small">Clients</span>
+        <span class="stat-label-small">Active Clients</span>
     </div>
-    <div class="stat-card-small">
-        <span class="stat-number-small"><?= $total_freelancers + $total_clients ?></span>
-        <span class="stat-label-small">Total Users</span>
+    <div class="stat-card-small suspended">
+        <span class="stat-number-small"><?= $suspended_freelancers + $suspended_clients ?></span>
+        <span class="stat-label-small">Suspended Users</span>
     </div>
 </div>
 
 <div class="users-section">
     <div class="section-header">
-        <h2>All Users</h2>
-        <div class="filter-buttons">
-            <a href="dashboard.php?page=users&type=all" 
-               class="filter-btn <?= $filter_type == 'all' ? 'active' : '' ?>">
-                All Users
-            </a>
-            <a href="dashboard.php?page=users&type=freelancers" 
-               class="filter-btn <?= $filter_type == 'freelancers' ? 'active' : '' ?>">
-                Freelancers
-            </a>
-            <a href="dashboard.php?page=users&type=clients" 
-               class="filter-btn <?= $filter_type == 'clients' ? 'active' : '' ?>">
-                Clients
-            </a>
+        <h2>Manage Users</h2>
+        <div class="filter-container">
+            <div class="filter-buttons">
+                <a href="dashboard.php?page=users&type=all&status=<?= $filter_status ?>" 
+                   class="filter-btn <?= $filter_type == 'all' ? 'active' : '' ?>">
+                    All Users
+                </a>
+                <a href="dashboard.php?page=users&type=freelancers&status=<?= $filter_status ?>" 
+                   class="filter-btn <?= $filter_type == 'freelancers' ? 'active' : '' ?>">
+                    Freelancers
+                </a>
+                <a href="dashboard.php?page=users&type=clients&status=<?= $filter_status ?>" 
+                   class="filter-btn <?= $filter_type == 'clients' ? 'active' : '' ?>">
+                    Clients
+                </a>
+            </div>
+            <div class="status-buttons">
+                <a href="dashboard.php?page=users&type=<?= $filter_type ?>&status=active" 
+                   class="status-btn <?= $filter_status == 'active' ? 'active' : '' ?>">
+                    Active
+                </a>
+                <a href="dashboard.php?page=users&type=<?= $filter_type ?>&status=suspended" 
+                   class="status-btn <?= $filter_status == 'suspended' ? 'active' : '' ?>">
+                    Suspended
+                </a>
+            </div>
         </div>
     </div>
     
@@ -103,6 +142,8 @@ $error = $_GET['error'] ?? '';
                         <th>Email</th>
                         <th>User Type</th>
                         <th>Joined Date</th>
+                        <th>Reports</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -114,16 +155,38 @@ $error = $_GET['error'] ?? '';
                             <td><?= htmlspecialchars($user['email']) ?></td>
                             <td>
                                 <span class="user-type-badge <?= strtolower($user['user_type']) ?>">
-                                    <?= $user['user_type'] ?>
+                                    <?= ucfirst($user['user_type']) ?>
                                 </span>
                             </td>
                             <td><?= date('M d, Y', strtotime($user['created_at'])) ?></td>
                             <td>
-                                <a href="actions/delete_user.php?id=<?= $user['user_id'] ?>&type=<?= strtolower($user['user_type']) ?>" 
-                                   class="btn-danger btn-small"
-                                   onclick="return confirm('Are you sure you want to delete this user? This action cannot be undone.')">
-                                    Delete
-                                </a>
+                                <?php if ($user['report_count'] > 0): ?>
+                                    <span class="report-count warning"><?= $user['report_count'] ?></span>
+                                <?php else: ?>
+                                    <span class="report-count clean">0</span>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?php if ($user['is_suspended']): ?>
+                                    <span class="status-badge suspended">Suspended</span>
+                                <?php else: ?>
+                                    <span class="status-badge active">Active</span>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?php if ($user['is_suspended']): ?>
+                                    <a href="actions/toggle_suspend.php?id=<?= $user['user_id'] ?>&type=<?= $user['user_type'] ?>&action=activate" 
+                                       class="btn-success btn-small"
+                                       onclick="return confirm('Activate this user account?')">
+                                        Activate
+                                    </a>
+                                <?php else: ?>
+                                    <a href="actions/toggle_suspend.php?id=<?= $user['user_id'] ?>&type=<?= $user['user_type'] ?>&action=suspend" 
+                                       class="btn-danger btn-small"
+                                       onclick="return confirm('Suspend this user account? They will not be able to login.')">
+                                        Suspend
+                                    </a>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endwhile; ?>

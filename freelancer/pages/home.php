@@ -1,19 +1,24 @@
 <?php
 // FreelanceHub/freelancer/pages/home.php
 
-// Get freelancer statistics
 $freelancer_id = $_SESSION['freelancer_id'];
+$skill_id = $_SESSION['freelancer_skill_id'];
 
 $apps_query = $conn->query("
     SELECT COUNT(*) as total FROM job_applications WHERE freelancer_id = $freelancer_id
 ");
 $total_applications = $apps_query->fetch_assoc()['total'] ?? 0;
 
-$skill_id = $_SESSION['freelancer_skill_id'];
-$jobs_query = $conn->query("
-    SELECT COUNT(*) as total FROM jobs WHERE skill_id = $skill_id
+$available_jobs_query = $conn->query("
+    SELECT COUNT(*) as total FROM jobs 
+    WHERE skill_id = $skill_id 
+    AND status = 'open'
+    AND is_hired = FALSE
+    AND job_id NOT IN (
+        SELECT job_id FROM job_applications WHERE freelancer_id = $freelancer_id
+    )
 ");
-$available_jobs = $jobs_query->fetch_assoc()['total'] ?? 0;
+$available_jobs = $available_jobs_query->fetch_assoc()['total'] ?? 0;
 
 $score_query = $conn->prepare("
     SELECT score FROM freelancer_test_attempts 
@@ -24,10 +29,28 @@ $score_query->bind_param("s", $_SESSION['freelancer_email']);
 $score_query->execute();
 $score_result = $score_query->get_result();
 $test_score = $score_result->num_rows > 0 ? $score_result->fetch_assoc()['score'] : 0;
+
+$recent_app_query = $conn->prepare("
+    SELECT ja.application_id, ja.applied_at, 
+           j.job_title, j.budget, j.job_description,
+           c.full_name as client_name,
+           s.skill_name
+    FROM job_applications ja
+    JOIN jobs j ON ja.job_id = j.job_id
+    JOIN clients c ON j.client_id = c.client_id
+    JOIN skill_categories s ON j.skill_id = s.skill_id
+    WHERE ja.freelancer_id = ?
+    ORDER BY ja.applied_at DESC
+    LIMIT 1
+");
+$recent_app_query->bind_param("i", $freelancer_id);
+$recent_app_query->execute();
+$recent_app_result = $recent_app_query->get_result();
+$recent_application = $recent_app_result->num_rows > 0 ? $recent_app_result->fetch_assoc() : null;
 ?>
 
 <div class="welcome-card card">
-    <h2>Welcome back, <?= htmlspecialchars(explode(' ', $_SESSION['freelancer_name'])[0]) ?>! 👋</h2>
+    <h2>Welcome, <?= htmlspecialchars(explode(' ', $_SESSION['freelancer_name'])[0]) ?>! 👋</h2>
     <p>Here's what's happening with your freelance work today.</p>
 </div>
 
@@ -69,6 +92,55 @@ $test_score = $score_result->num_rows > 0 ? $score_result->fetch_assoc()['score'
     </div>
 </div>
 
+<?php if ($recent_application): ?>
+<div class="card recent-activity-card">
+    <div class="section-header">
+        <h3>Recent Application</h3>
+        <a href="dashboard.php?page=applications" class="view-all-link">View All</a>
+    </div>
+    
+    <div class="recent-job-card">
+        <div class="job-card-header">
+            <div class="job-info">
+                <h4 class="job-title"><?= htmlspecialchars($recent_application['job_title']) ?></h4>
+                <div class="job-meta">
+                    <span class="meta-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2 1a4 4 0 0 1 3.5 5.5.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5A4 4 0 0 1 5 9h3z"/>
+                        </svg>
+                        <?= htmlspecialchars($recent_application['client_name']) ?>
+                    </span>
+                    <span class="meta-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                        </svg>
+                        Applied <?= date('M d, Y', strtotime($recent_application['applied_at'])) ?>
+                    </span>
+                </div>
+            </div>
+            <div class="job-budget">
+                $<?= number_format($recent_application['budget'], 2) ?>
+            </div>
+        </div>
+        
+        <p class="job-description">
+            <?= htmlspecialchars(substr($recent_application['job_description'], 0, 150)) ?>
+            <?= strlen($recent_application['job_description']) > 150 ? '...' : '' ?>
+        </p>
+        
+        <div class="job-footer">
+            <span class="skill-badge">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" style="margin-right: 4px;">
+                    <path d="M7 0L9 5h5l-4 3 1.5 5L7 10l-4.5 3L4 8 0 5h5z"/>
+                </svg>
+                <?= htmlspecialchars($recent_application['skill_name']) ?>
+            </span>
+            <!-- <span class="status-pending">Pending Review</span> -->
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
 <div class="card">
     <h3 style="margin-bottom: 15px; color: #1a1a1a;">Quick Actions</h3>
     <div class="quick-actions">
@@ -93,96 +165,4 @@ $test_score = $score_result->num_rows > 0 ? $score_result->fetch_assoc()['score'
     </div>
 </div>
 
-<style>
-.welcome-card h2 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin-bottom: 10px;
-}
-
-.welcome-card p {
-    color: #666;
-    font-size: 0.95rem;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    margin-bottom: 30px;
-}
-
-.stat-card {
-    background: #fff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.stat-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.stat-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.stat-number {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #1a1a1a;
-}
-
-.stat-label {
-    font-size: 0.85rem;
-    color: #666;
-}
-
-.quick-actions {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.action-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 24px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.2s ease;
-}
-
-.action-btn.primary {
-    background: #00a2ff;
-    color: #fff;
-}
-
-.action-btn.primary:hover {
-    background: #0090e0;
-    transform: translateY(-2px);
-}
-
-.action-btn.secondary {
-    background: #f8f9fa;
-    color: #333;
-    border: 1px solid #e0e0e0;
-}
-
-.action-btn.secondary:hover {
-    background: #e0e0e0;
-}
-</style>
+<link rel="stylesheet" href="css/freelancer_home.css">

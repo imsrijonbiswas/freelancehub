@@ -3,7 +3,6 @@
 
 $client_id = $_SESSION['client_id'];
 
-// Get all payments made by client
 $payments_query = $conn->query("
     SELECT 
         p.*,
@@ -18,7 +17,6 @@ $payments_query = $conn->query("
     ORDER BY p.paid_at DESC
 ");
 
-// Get total spent
 $total_query = $conn->query("
     SELECT COALESCE(SUM(p.amount), 0) as total
     FROM payments p
@@ -27,7 +25,6 @@ $total_query = $conn->query("
 ");
 $total_spent = $total_query->fetch_assoc()['total'];
 
-// Get pending payments (hired but not paid)
 $pending_query = $conn->query("
     SELECT 
         hf.hire_id,
