@@ -54,7 +54,7 @@ $message = $_GET['msg'] ?? '';
 
 <div class="earnings-container">
     <div class="page-header">
-        <h1>My Earnings</h1>
+        <h1></h1>
         <div class="total-earned">
             <span>Total Earned:</span>
             <strong>$<?= number_format($total_earned, 2) ?></strong>

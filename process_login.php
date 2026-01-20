@@ -108,6 +108,5 @@ if ($result->num_rows > 0) {
     exit();
 }
 
-// INVALID LOGIN
 header('Location: login.php?error=Invalid email or password');
 exit();

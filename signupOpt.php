@@ -8,9 +8,8 @@ include 'header.php';
         <h1>How do you want to join?</h1>
 
         <div class="cards-container">
-            <!-- Client Card -->
             <div class="signup-card client-card">
-                <div class="card-icon">💼</div> <!-- optional, can replace with img -->
+                <div class="card-icon">💼</div>
                 <h2>Hire for a Project</h2>
                 <ul>
                     <li>Post jobs</li>
@@ -21,9 +20,8 @@ include 'header.php';
                 <a href="client/clientSignup.php" class="btn-card">Join as Client</a>
             </div>
 
-            <!-- Freelancer Card -->
             <div class="signup-card freelancer-card">
-                <div class="card-icon">🧑‍💻</div> <!-- optional, can replace with img -->
+                <div class="card-icon">🧑‍💻</div>
                 <h2>Work as a Freelancer</h2>
                 <ul>
                     <li>Create a skill profile</li>
