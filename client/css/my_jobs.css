@@ -178,7 +178,7 @@
     justify-content: flex-end;
 }
 
-.btn-report {
+.btn-report-hired {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -193,12 +193,12 @@
     transition: all 0.3s ease;
 }
 
-.btn-report:hover {
+.btn-report-hired:hover {
     background: #fee2e2;
     transform: translateY(-1px);
 }
 
-.btn-report svg {
+.btn-report-hired svg {
     flex-shrink: 0;
 }
 

@@ -54,7 +54,7 @@ $error = $_GET['error'] ?? '';
     <?php if ($skills_query && $skills_query->num_rows > 0): ?>
         <div class="skills-grid">
             <?php 
-            $skills_query->data_seek(0); // Reset pointer
+            $skills_query->data_seek(0);
             while ($skill = $skills_query->fetch_assoc()): 
             ?>
                 <div class="skill-card">

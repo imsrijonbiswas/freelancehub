@@ -4,6 +4,16 @@
     padding: 20px 0;
 }
 
+.success-message {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #2e7d32;
+    font-weight: 600;
+}
+
 .jobs-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
@@ -54,6 +64,7 @@
     margin-bottom: 15px;
     font-size: 0.9rem;
     color: #666;
+    flex-wrap: wrap;
 }
 
 .job-meta span {
@@ -64,6 +75,37 @@
 
 .job-meta svg {
     color: #00a2ff;
+}
+
+.client-name-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #00a2ff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.client-name-link:hover {
+    color: #0090e0;
+    text-decoration: underline;
+}
+
+.client-name-link svg {
+    color: inherit;
+    transition: transform 0.2s ease;
+}
+
+.client-name-link:hover svg {
+    transform: scale(1.1);
+}
+
+.job-date {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .job-description {
@@ -106,8 +148,30 @@
     transform: translateX(2px);
 }
 
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    color: #999;
+}
+
+.empty-state p {
+    margin-top: 20px;
+    font-size: 1.1rem;
+}
+
 @media (max-width: 768px) {
     .jobs-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .job-header {
+        flex-direction: column;
+    }
+    
+    .job-budget {
+        align-self: flex-start;
     }
 }

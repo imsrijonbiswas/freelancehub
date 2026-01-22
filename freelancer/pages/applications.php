@@ -7,6 +7,7 @@ $apps_query = $conn->query("
     SELECT 
         ja.application_id,
         ja.applied_at,
+        ja.job_id,
         j.job_title,
         j.job_description,
         j.budget,
@@ -18,7 +19,12 @@ $apps_query = $conn->query("
             WHEN hf.hire_id IS NOT NULL THEN 'hired'
             WHEN j.status = 'closed' THEN 'rejected'
             ELSE 'pending'
-        END as application_status
+        END as application_status,
+        (SELECT COUNT(*) FROM user_reports 
+         WHERE job_id = ja.job_id 
+         AND reported_user_id = c.client_id 
+         AND reporter_id = $freelancer_id 
+         AND reporter_type = 'freelancer') as already_reported
     FROM job_applications ja
     JOIN jobs j ON ja.job_id = j.job_id
     JOIN clients c ON j.client_id = c.client_id
@@ -27,7 +33,18 @@ $apps_query = $conn->query("
     WHERE ja.freelancer_id = $freelancer_id
     ORDER BY ja.applied_at DESC
 ");
+
+$message = $_GET['msg'] ?? '';
+$error = $_GET['error'] ?? '';
 ?>
+
+<?php if ($message == 'reported'): ?>
+    <div class="success-message">Client reported successfully! Admin will review it.</div>
+<?php endif; ?>
+
+<?php if ($error): ?>
+    <div class="error-message"><?= htmlspecialchars($error) ?></div>
+<?php endif; ?>
 
 <div class="applications-container">
     <?php if ($apps_query && $apps_query->num_rows > 0): ?>
@@ -53,7 +70,30 @@ $apps_query = $conn->query("
                             <span class="skill-tag"><?= htmlspecialchars($app['skill_name']) ?></span>
                             <span class="budget-tag">$<?= number_format($app['budget'], 2) ?></span>
                         </div>
-                        <span class="applied-date">Applied: <?= date('M d, Y', strtotime($app['applied_at'])) ?></span>
+                        <div class="app-actions">
+                            <span class="applied-date">Applied: <?= date('M d, Y', strtotime($app['applied_at'])) ?></span>
+                            <?php if ($app['application_status'] == 'hired'): ?>
+                                <?php if ($app['already_reported'] == 0): ?>
+                                    <button onclick="openReportModal(<?= $app['client_id'] ?>, <?= $app['job_id'] ?>)" class="btn-report-client">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                        </svg>
+                                        Report Client
+                                    </button>
+                                <?php else: ?>
+                                    <span class="already-reported-badge">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <line x1="12" y1="8" x2="12" y2="12" stroke="white" stroke-width="2"></line>
+                                            <line x1="12" y1="16" x2="12.01" y2="16" stroke="white" stroke-width="2"></line>
+                                        </svg>
+                                        Reported
+                                    </span>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             <?php endwhile; ?>
@@ -69,5 +109,60 @@ $apps_query = $conn->query("
         </div>
     <?php endif; ?>
 </div>
+
+<div id="reportModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeReportModal()">&times;</span>
+        <h2>Report Fraudulent Activity</h2>
+        <form action="actions/report_client.php" method="POST">
+            <input type="hidden" name="client_id" id="report_client_id">
+            <input type="hidden" name="job_id" id="report_job_id">
+            
+            <div class="form-group">
+                <label>Reason *</label>
+                <select name="report_reason" required>
+                    <option value="">Select a reason</option>
+                    <option value="Non-Payment">Non-Payment</option>
+                    <option value="Unclear Requirements">Unclear Requirements</option>
+                    <option value="Unprofessional Behavior">Unprofessional Behavior</option>
+                    <option value="Scope Creep">Scope Creep</option>
+                    <option value="Harassment">Harassment</option>
+                    <option value="Scam/Fraud">Scam/Fraud</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Additional Details *</label>
+                <textarea name="report_message" rows="4" required 
+                          placeholder="Please provide details about the issue..."></textarea>
+            </div>
+            
+            <div class="modal-actions">
+                <button type="button" onclick="closeReportModal()" class="btn-cancel">Cancel</button>
+                <button type="submit" class="btn-submit-report">Submit Report</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function openReportModal(clientId, jobId) {
+    document.getElementById('report_client_id').value = clientId;
+    document.getElementById('report_job_id').value = jobId;
+    document.getElementById('reportModal').style.display = 'block';
+}
+
+function closeReportModal() {
+    document.getElementById('reportModal').style.display = 'none';
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById('reportModal');
+    if (event.target == modal) {
+        closeReportModal();
+    }
+}
+</script>
 
 <link rel="stylesheet" href="css/applications.css">

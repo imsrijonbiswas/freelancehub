@@ -7,7 +7,12 @@ $jobs_query = $conn->query("
     SELECT j.*, s.skill_name,
            (SELECT COUNT(*) FROM job_applications WHERE job_id = j.job_id) as application_count,
            f.full_name as hired_freelancer_name,
-           hf.hired_at
+           hf.hired_at,
+           (SELECT COUNT(*) FROM user_reports 
+            WHERE job_id = j.job_id 
+            AND reported_user_id = j.hired_freelancer_id 
+            AND reporter_id = $client_id 
+            AND reporter_type = 'client') as already_reported
     FROM jobs j
     LEFT JOIN skill_categories s ON j.skill_id = s.skill_id
     LEFT JOIN hired_freelancers hf ON j.job_id = hf.job_id AND hf.status = 'active'
@@ -17,6 +22,7 @@ $jobs_query = $conn->query("
 ");
 
 $message = $_GET['msg'] ?? '';
+$error = $_GET['error'] ?? '';
 ?>
 
 <link rel="stylesheet" href="css/my_jobs.css">
@@ -25,8 +31,14 @@ $message = $_GET['msg'] ?? '';
     <div class="success-message">Job closed successfully!</div>
 <?php elseif ($message == 'hired'): ?>
     <div class="success-message">Freelancer hired successfully!</div>
+<?php elseif ($message == 'reported'): ?>
+    <div class="success-message">Freelancer reported successfully! Admin will review it.</div>
 <?php elseif ($message == 'already_hired'): ?>
     <div class="error-message">You have already hired a freelancer for this job!</div>
+<?php endif; ?>
+
+<?php if ($error): ?>
+    <div class="error-message"><?= htmlspecialchars($error) ?></div>
 <?php endif; ?>
 
 <div class="my-jobs-container">
@@ -58,25 +70,36 @@ $message = $_GET['msg'] ?? '';
                     
                     <p class="job-description"><?= nl2br(htmlspecialchars($job['job_description'])) ?></p>
                     
-    <?php if ($job['is_hired'] && $job['hired_freelancer_name']): ?>
-        <div class="hired-freelancer-info">
-            <div class="hired-badge">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"                 stroke="currentColor" stroke-width="2">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-            <span>Hired: <?= htmlspecialchars($job['hired_freelancer_name']) ?></span>
-        </div>
-        <span class="hired-date">on <?= date('M d, Y', strtotime($job['hired_at'])) ?></span>
-            <a href="dashboard.php?page=freelancers&id=<?= $job['hired_freelancer_id'] ?>" 
-                class="btn-view-profile">View Profile
-            </a>
-                <button onclick="openReportModal(<?= $job['hired_freelancer_id'] ?>, <?= $job['job_id'] ?>)" 
-                class="btn-report-hired">
-            Report Issue
-            </button>
-        </div>
-    <?php endif; ?>
+                    <?php if ($job['is_hired'] && $job['hired_freelancer_name']): ?>
+                        <div class="hired-freelancer-info">
+                            <div class="hired-badge">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                                <span>Hired: <?= htmlspecialchars($job['hired_freelancer_name']) ?></span>
+                            </div>
+                            <span class="hired-date">on <?= date('M d, Y', strtotime($job['hired_at'])) ?></span>
+                            <a href="dashboard.php?page=freelancers&id=<?= $job['hired_freelancer_id'] ?>" 
+                               class="btn-view-profile">View Profile
+                            </a>
+                            <?php if ($job['already_reported'] == 0): ?>
+                                <button onclick="openReportModal(<?= $job['hired_freelancer_id'] ?>, <?= $job['job_id'] ?>)" 
+                                        class="btn-report-hired">
+                                    Report Issue
+                                </button>
+                            <?php else: ?>
+                                <span class="already-reported-badge">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="8" x2="12" y2="12" stroke="white" stroke-width="2"></line>
+                                        <line x1="12" y1="16" x2="12.01" y2="16" stroke="white" stroke-width="2"></line>
+                                    </svg>
+                                    Reported
+                                </span>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
                     
                     <div class="job-card-footer">
                         <span class="applications-count">
@@ -157,6 +180,7 @@ $message = $_GET['msg'] ?? '';
             <a href="dashboard.php?page=post-job" class="btn-primary">Post Your First Job</a>
         </div>
     <?php endif; ?>
+</div>
 
 <div id="reportModal" class="modal">
     <div class="modal-content">
@@ -193,6 +217,34 @@ $message = $_GET['msg'] ?? '';
     </div>
 </div>
 
+<style>
+.already-reported-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ff9800;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.already-reported-badge svg {
+    flex-shrink: 0;
+}
+
+.error-message {
+    background: #ffebee;
+    color: #c62828;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #c62828;
+    font-weight: 600;
+}
+</style>
+
 <script>
 function openReportModal(freelancerId, jobId) {
     document.getElementById('report_freelancer_id').value = freelancerId;
@@ -211,4 +263,3 @@ window.onclick = function(event) {
     }
 }
 </script>
-</div>

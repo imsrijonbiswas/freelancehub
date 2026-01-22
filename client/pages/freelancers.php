@@ -1,6 +1,5 @@
 <?php
 // FreelanceHub/client/pages/freelancers.php
-
 $client_id = $_SESSION['client_id'];
 $view_freelancer_id = $_GET['id'] ?? null;
 
@@ -33,17 +32,6 @@ if ($view_freelancer_id) {
     $worked_together_query->bind_param("ii", $client_id, $view_freelancer_id);
     $worked_together_query->execute();
     $worked_jobs = $worked_together_query->get_result();
-    
-    $report_check = $conn->prepare("
-        SELECT report_id FROM user_reports 
-        WHERE reported_user_id = ? AND reported_user_type = 'freelancer' 
-        AND reporter_id = ? AND reporter_type = 'client'
-    ");
-    $report_check->bind_param("ii", $view_freelancer_id, $client_id);
-    $report_check->execute();
-    $already_reported = $report_check->get_result()->num_rows > 0;
-    
-    $can_report = ($worked_jobs->num_rows > 0) && !$already_reported;
 } else {
     $freelancers_query = $conn->query("
         SELECT f.*, s.skill_name,
@@ -59,31 +47,14 @@ if ($view_freelancer_id) {
         ORDER BY test_score DESC, completed_jobs DESC
     ");
 }
-
-$message = $_GET['msg'] ?? '';
 ?>
 
 <link rel="stylesheet" href="css/freelancers.css">
-
-<?php if ($message == 'reported'): ?>
-    <div class="success-message">Freelancer reported successfully! Admin will review it.</div>
-<?php endif; ?>
 
 <?php if ($view_freelancer_id && $freelancer): ?>
     <div class="freelancer-profile-container">
         <div class="profile-header">
             <a href="dashboard.php?page=freelancers" class="btn-back">← Back to Freelancers</a>
-            
-            <?php if ($can_report): ?>
-                <button onclick="openReportModal(<?= $freelancer['freelancer_id'] ?>)" class="btn-report">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="12" y1="8" x2="12" y2="12"></line>
-                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                    </svg>
-                    Report Issue
-                </button>
-            <?php endif; ?>
         </div>
         
         <div class="profile-card">
@@ -175,68 +146,3 @@ $message = $_GET['msg'] ?? '';
         </div>
     </div>
 <?php endif; ?>
-
-<div id="reportModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeReportModal()">&times;</span>
-        <h2>Report Fraudulent Activity</h2>
-        <form action="actions/report_freelancer.php" method="POST">
-            <input type="hidden" name="freelancer_id" id="report_freelancer_id">
-            
-            <div class="form-group">
-                <label>Related Job *</label>
-                <select name="job_id" required>
-                    <option value="">Select the job</option>
-                    <?php if (isset($worked_jobs) && $worked_jobs->num_rows > 0): ?>
-                        <?php $worked_jobs->data_seek(0); ?>
-                        <?php while ($job = $worked_jobs->fetch_assoc()): ?>
-                            <option value="<?= $job['job_id'] ?>"><?= htmlspecialchars($job['job_title']) ?></option>
-                        <?php endwhile; ?>
-                    <?php endif; ?>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label>Reason *</label>
-                <select name="report_reason" required>
-                    <option value="">Select a reason</option>
-                    <option value="Fake Profile">Fake Profile</option>
-                    <option value="Poor Work Quality">Poor Work Quality</option>
-                    <option value="Unprofessional Behavior">Unprofessional Behavior</option>
-                    <option value="Payment Issues">Payment Issues</option>
-                    <option value="Scam/Fraud">Scam/Fraud</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label>Additional Details *</label>
-                <textarea name="report_message" rows="4" required 
-                          placeholder="Please provide details about the issue..."></textarea>
-            </div>
-            
-            <div class="modal-actions">
-                <button type="button" onclick="closeReportModal()" class="btn-cancel">Cancel</button>
-                <button type="submit" class="btn-submit-report">Submit Report</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<script>
-function openReportModal(freelancerId) {
-    document.getElementById('report_freelancer_id').value = freelancerId;
-    document.getElementById('reportModal').style.display = 'block';
-}
-
-function closeReportModal() {
-    document.getElementById('reportModal').style.display = 'none';
-}
-
-window.onclick = function(event) {
-    const modal = document.getElementById('reportModal');
-    if (event.target == modal) {
-        closeReportModal();
-    }
-}
-</script>

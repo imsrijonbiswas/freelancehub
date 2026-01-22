@@ -5,12 +5,13 @@ $freelancer_id = $_SESSION['freelancer_id'];
 $skill_id = $_SESSION['freelancer_skill_id'];
 
 $jobs_query = $conn->query("
-    SELECT j.*, c.full_name as client_name, s.skill_name
+    SELECT j.*, c.full_name as client_name, c.client_id, s.skill_name
     FROM jobs j
     JOIN clients c ON j.client_id = c.client_id
     JOIN skill_categories s ON j.skill_id = s.skill_id
     WHERE j.skill_id = $skill_id 
     AND j.status = 'open'
+    AND j.is_hired = FALSE
     AND j.job_id NOT IN (
         SELECT job_id FROM job_applications WHERE freelancer_id = $freelancer_id
     )
@@ -35,12 +36,12 @@ $message = $_GET['msg'] ?? '';
                     </div>
                     
                     <div class="job-meta">
-                        <span class="client-name">
+                        <a href="dashboard.php?page=client_profile&id=<?= $job['client_id'] ?>" class="client-name-link">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2 1a4 4 0 0 1 3.5 5.5.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5A4 4 0 0 1 5 9h3z"/>
                             </svg>
                             <?= htmlspecialchars($job['client_name']) ?>
-                        </span>
+                        </a>
                         <span class="job-date">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                 <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-2H5v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2h6V2z"/>

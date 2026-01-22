@@ -30,40 +30,14 @@ $jobs_query->bind_param("ii", $client_id, $freelancer_id);
 $jobs_query->execute();
 $worked_jobs = $jobs_query->get_result();
 
-$report_check = $conn->prepare("
-    SELECT report_id FROM user_reports 
-    WHERE reported_user_id = ? AND reported_user_type = 'client' 
-    AND reporter_id = ? AND reporter_type = 'freelancer'
-");
-$report_check->bind_param("ii", $client_id, $freelancer_id);
-$report_check->execute();
-$already_reported = $report_check->get_result()->num_rows > 0;
-
-$worked_together = $worked_jobs->num_rows > 0;
-
 $message = $_GET['msg'] ?? '';
 ?>
 
 <link rel="stylesheet" href="css/client_profile.css">
 
-<?php if ($message == 'reported'): ?>
-    <div class="success-message">Client reported successfully! Admin will review it.</div>
-<?php endif; ?>
-
 <div class="client-profile-container">
     <div class="profile-header">
         <a href="dashboard.php?page=applications" class="btn-back">← Back to Applications</a>
-        
-        <?php if ($worked_together && !$already_reported): ?>
-            <button onclick="openReportModal(<?= $client_id ?>)" class="btn-report">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                </svg>
-                Report Issue
-            </button>
-        <?php endif; ?>
     </div>
     
     <div class="profile-card">
@@ -115,56 +89,3 @@ $message = $_GET['msg'] ?? '';
         <?php endif; ?>
     </div>
 </div>
-
-<div id="reportModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeReportModal()">&times;</span>
-        <h2>Report Fraudulent Activity</h2>
-        <form action="actions/report_client.php" method="POST">
-            <input type="hidden" name="client_id" id="report_client_id">
-            
-            <div class="form-group">
-                <label>Reason *</label>
-                <select name="report_reason" required>
-                    <option value="">Select a reason</option>
-                    <option value="Non-Payment">Non-Payment</option>
-                    <option value="Unclear Requirements">Unclear Requirements</option>
-                    <option value="Unprofessional Behavior">Unprofessional Behavior</option>
-                    <option value="Scope Creep">Scope Creep</option>
-                    <option value="Harassment">Harassment</option>
-                    <option value="Scam/Fraud">Scam/Fraud</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label>Additional Details *</label>
-                <textarea name="report_message" rows="4" required 
-                          placeholder="Please provide details about the issue..."></textarea>
-            </div>
-            
-            <div class="modal-actions">
-                <button type="button" onclick="closeReportModal()" class="btn-cancel">Cancel</button>
-                <button type="submit" class="btn-submit-report">Submit Report</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<script>
-function openReportModal(clientId) {
-    document.getElementById('report_client_id').value = clientId;
-    document.getElementById('reportModal').style.display = 'block';
-}
-
-function closeReportModal() {
-    document.getElementById('reportModal').style.display = 'none';
-}
-
-window.onclick = function(event) {
-    const modal = document.getElementById('reportModal');
-    if (event.target == modal) {
-        closeReportModal();
-    }
-}
-</script>

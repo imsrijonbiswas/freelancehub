@@ -6,6 +6,26 @@
     padding: 20px 0;
 }
 
+.success-message {
+    background: #dcfce7;
+    color: #16a34a;
+    padding: 15px 20px;
+    border-radius: 8px;
+    border-left: 4px solid #4caf50;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.error-message {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 15px 20px;
+    border-radius: 8px;
+    border-left: 4px solid #ef4444;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
 .applications-list {
     display: grid;
     gap: 20px;
@@ -144,9 +164,59 @@
     font-weight: 700;
 }
 
+.app-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
 .applied-date {
     font-size: 0.85rem;
     color: #999;
+}
+
+.btn-report-client {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: #fff;
+    border: 1.5px solid #dc2626;
+    border-radius: 6px;
+    color: #dc2626;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.btn-report-client:hover {
+    background: #fee2e2;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.2);
+}
+
+.btn-report-client svg {
+    flex-shrink: 0;
+}
+
+.already-reported-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.already-reported-badge svg {
+    flex-shrink: 0;
 }
 
 .empty-state {
@@ -183,6 +253,124 @@
     box-shadow: 0 4px 12px rgba(0, 162, 255, 0.3);
 }
 
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 550px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+    color: #999;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: #333;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #1a1a1a;
+    font-size: 1.5rem;
+}
+
+.modal .form-group {
+    margin-bottom: 20px;
+}
+
+.modal .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.modal select,
+.modal textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
+.modal select:focus,
+.modal textarea:focus {
+    outline: none;
+    border-color: #00a2ff;
+    box-shadow: 0 0 0 3px rgba(0, 162, 255, 0.1);
+}
+
+.modal textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.btn-cancel {
+    padding: 10px 24px;
+    background: #f3f4f6;
+    border: none;
+    border-radius: 8px;
+    color: #666;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.btn-cancel:hover {
+    background: #e5e7eb;
+}
+
+.btn-submit-report {
+    padding: 10px 24px;
+    background: #dc2626;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.btn-submit-report:hover {
+    background: #b91c1c;
+    transform: translateY(-1px);
+}
+
 @media (max-width: 768px) {
     .app-header {
         flex-direction: column;
@@ -193,7 +381,33 @@
         align-items: flex-start;
     }
     
+    .app-actions {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .btn-report-client,
+    .already-reported-badge {
+        width: 100%;
+        justify-content: center;
+    }
+    
     .application-card {
         padding: 20px;
+    }
+    
+    .modal-content {
+        margin: 10% auto;
+        padding: 20px;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+    }
+    
+    .btn-cancel,
+    .btn-submit-report {
+        width: 100%;
     }
 }
